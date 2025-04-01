@@ -1,0 +1,101 @@
+import React, { useState } from "react";
+import "../FormsElements/formstyle.css";
+import Element from "../FormsElements/Configue/Elements";
+import data from "../FormsElements/Configue/formJson.json";
+import { Field } from "../FormsElements/Configue/types";
+
+const fields: Field[] = Array.isArray(data?.Parameter?.fields)
+  ? data.Parameter.fields.map((f: any) => ({
+      field_id: f.field_id || "",
+      field_label: f.field_label || "",
+      field_value: f.field_value || "",
+      field_mandatory: f.field_mandatory || "no",
+      field_placeholder: f.field_placeholder || "",
+      field_default_value: f.field_default_value || "",
+      field_type: f.field_type || "text",
+      field_option_src: f.field_option_src || null, 
+      field_disabled_Edit: f.field_disabled_Edit || "",
+      field_error_msg_required: f.field_error_msg_required || "",
+      field_option_attributes: f.field_option_attributes || [],
+      field_options: f.field_options || [], 
+      field_minlength: f.field_minlength || "",
+      field_maxlength: f.field_maxlength || "",
+      field_minvalue: f.field_minvalue || "",
+      field_maxvalue: f.field_maxvalue || "",
+      field_value_type: f.field_value_type || "",
+      field_past_Disable: f.field_past_Disable || "",
+      field_on_blur: f.field_on_blur || "",
+      field_disabled: f.field_disabled || "",
+      field_error_msg_minlength: f.field_error_msg_minlength || "",
+      field_error_msg_maxlength: f.field_error_msg_maxlength || "",
+      field_error_msg_minvalue: f.field_error_msg_minvalue || "",
+      field_error_msg_maxvalue: f.field_error_msg_maxvalue || "",
+      field_error_msg_uq: f.field_error_msg_uq || "",
+      field_apipath: f.field_apipath || "",
+  
+    }))
+  : [];
+
+const FormPage: React.FC = () => {
+  const [formValues, setFormValues] = useState<{ [key: string]: any }>({});
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault(); 
+    const form = e.currentTarget as HTMLFormElement;
+    const formData = new FormData(form);
+    const formValues: { [key: string]: any } = {};
+    formData.forEach((value, key) => {
+      formValues[key] = value;
+    });
+    console.log("Form Values:", formValues);
+  };
+
+  const openPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
+
+  const renderForm = () => (
+    <form onSubmit={handleSubmit} className="form">
+      {fields.map((field) => (
+         <Element key={field.field_id} field={field as Field}/>
+      ))}
+      <div style={{ gridColumn: "1 / -1", textAlign: "center" }}>
+        <button type="submit" className="formbtn">
+          Submit
+        </button>
+      </div>
+    </form>
+  );
+
+  return (
+    <div>
+      {data?.xioFEConfig?.TabStyle === "popup" ? (
+        <>
+          <button onClick={openPopup} className="formbtn">
+            Open Form
+          </button>
+          {isPopupOpen && (
+            <div className="popup-overlay">
+              <div className="popup-content">
+                <button onClick={closePopup} className="close-btn">
+                  &times;
+                </button>
+                {renderForm()}
+              </div>
+            </div>
+          )}
+        </>
+      ) : (
+        renderForm()
+      )}
+    </div>
+  );
+};
+
+export default FormPage;

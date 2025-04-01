@@ -1,0 +1,24 @@
+import * as React from "react";
+import { Checkbox } from "@fluentui/react-components";
+import  { CheckboxProps} from "@fluentui/react-components";
+import Field from './Input.json';
+const fields= Field.Parameter.fields;
+export default function checkBoxElement(){
+  // const [checked, setChecked] = React.useState<CheckboxProps["checked"]>(true);
+  const field = fields.find(f => f.field_type === "radio");
+  return (
+    <div>
+ {
+    field.field_options.map((option)=>{return(
+        <Checkbox
+        
+        key={option.value} value={option.value} 
+        
+        label={option.option_label}
+      />
+    )})
+   
+        }
+    </div>
+  );
+};

@@ -1,0 +1,232 @@
+{
+    "Parameter": {
+        "page_label": "",
+        "fields": [
+             
+             
+             {
+                "field_id": "date",
+                "field_label": "Created at",
+                "field_placeholder":"Select Date",
+                "field_value": "",
+                "field_default_value": "",
+                "field_mandatory": "",
+                "field_type": "date",
+                "field_minlength": "",
+                "field_maxlength": "",
+                "field_minvalue": "",
+                "field_maxvalue": "",
+                "field_value_type": "today",
+                "field_past_Disable": "",
+                "field_on_blur": "",
+                "field_disabled": "",
+                "field_error_msg_required": "Please select Date",
+                "field_error_msg_minlength": "",
+                "field_error_msg_maxlength": "",
+                "field_error_msg_minvalue": "",
+                "field_error_msg_maxvalue": "",
+                "field_error_msg_uq": ""
+            },
+            {
+                "field_id": "payload",
+                "field_label": "Payload",
+                "field_value": "",
+                "field_mandatory": "yes",
+                "field_placeholder": "Select",
+                "field_default_value":"",
+                "field_option_src": {
+                    "field_option_check_local_storage": "true",
+                    "field_option_src_context": "gtsCompanydetails",
+                    "field_option_src_critieria": "all",
+                    "field_option_label": "companyshortname",
+                    "field_option_value": "gtscompanyid",
+                    "field_select_all_label": "",
+                    "field_select_all_value": "",
+                    "field_option_attributes":["suffix"]
+                },
+                "field_options": [
+                    {
+                        "option_label": "JSON",
+                        "value": "0"
+                    },
+                    {
+                        "option_label": "XML",
+                        "value": "1"
+                    }
+                    
+                ],
+                "field_type": "select",
+                "field_minlength": "",
+                "field_maxlength": "",
+                "field_minvalue": "",
+                "field_maxvalue": "",
+                "field_value_type": "",
+                "field_on_blur": "",
+                "field_error_msg_required": "",
+                "field_error_msg_minlength": "",
+                "field_error_msg_maxlength": "",
+                "field_error_msg_minvalue": "",
+                "field_error_msg_maxvalue": "",
+                "field_error_msg_uq": ""
+            },
+            {
+                "field_id": "responseSuccess",
+                "field_label": "Response Success",
+                "field_value": "",
+                "field_mandatory": "yes",
+                "field_placeholder": "Select",
+                "field_default_value":"",
+                "field_option_src": {
+                    "field_option_check_local_storage": "true",
+                    "field_option_src_context": "gtsCompanydetails",
+                    "field_option_src_critieria": "all",
+                    "field_option_label": "companyshortname",
+                    "field_option_value": "gtscompanyid",
+                    "field_select_all_label": "",
+                    "field_select_all_value": "",
+                    "field_option_attributes":["suffix"]
+                },
+                "field_options": [
+                    {
+                        "option_label": "JSON",
+                        "value": "0"
+                    },
+                    {
+                        "option_label": "XML",
+                        "value": "1"
+                    }
+                   
+                ],
+                "field_type": "select",
+                "field_minlength": "",
+                "field_maxlength": "",
+                "field_minvalue": "",
+                "field_maxvalue": "",
+                "field_value_type": "",
+                "field_on_blur": "",
+                "field_error_msg_required": "",
+                "field_error_msg_minlength": "",
+                "field_error_msg_maxlength": "",
+                "field_error_msg_minvalue": "",
+                "field_error_msg_maxvalue": "",
+                "field_error_msg_uq": ""
+            },
+            {
+                "field_id": "apiurl",
+                "field_label": "API URL",
+                "field_mandatory": "yes",
+                "field_placeholder": "API URL",
+                "field_type": "text",
+                "field_value": "",
+                "field_attribute_value": "",
+                "field_disabled_Edit": "no",
+                "field_default_value": "",
+                "field_disabled": "",
+                "field_minlength": "",
+                "field_maxlength": "",
+                "field_minvalue": "",
+                "field_maxvalue": "",
+                "field_value_type": "SpecialCharacter",
+                "field_on_blur": "",
+                "field_error_msg_required": "",
+                "field_error_msg_minlength": "",
+                "field_error_msg_maxlength": "",
+                "field_error_msg_minvalue": "",
+                "field_error_msg_maxvalue": "",
+                "field_error_msg_uq": "",
+                "field_unique": "no",
+                "field_apipath": ""
+            },
+            {
+                "field_id": "name",
+                "field_label": "Enterprise Name",
+                "field_mandatory": "yes",
+                "field_placeholder": "",
+                "field_type": "text",
+                "field_value": "",
+                "field_attribute_value": "",
+                "field_disabled_Edit": "no",
+                "field_default_value": "",
+                "field_disabled": "",
+                "field_minlength": "",
+                "field_maxlength": "",
+                "field_minvalue": "",
+                "field_maxvalue": "",
+                "field_value_type": "",
+                "field_on_blur": "",
+                "field_error_msg_required": "",
+                "field_error_msg_minlength": "",
+                "field_error_msg_maxlength": "",
+                "field_error_msg_minvalue": "",
+                "field_error_msg_maxvalue": "",
+                "field_error_msg_uq": "",
+                "field_unique": "no",
+                "field_apipath": ""
+            },
+            {
+                "field_id": "status",
+                "field_label": "Status",
+                "field_value": "",
+                "field_mandatory": "",
+                "field_placeholder": "",
+                "field_default_value":"",
+                "field_option_src": {
+                    "field_option_check_local_storage": "true",
+                    "field_option_src_context": "",
+                    "field_option_src_critieria": "all",
+                    "field_option_label": "",
+                    "field_option_value": "id",
+                    "field_select_all_label": "",
+                    "field_select_all_value": ""
+                },
+                "field_options": [
+                    {
+                        "option_label": "Active",
+                        "value": "A"
+                    },
+                    {
+                        "option_label": "Pending",
+                        "value": "P"
+                    },
+                    {
+                        "option_label": "Inactive",
+                        "value": "I"
+                    }
+                    
+                ],
+                "field_type": "radio",
+                "field_disabled": "",
+                "field_disabled_Edit": "yes",
+                "field_minlength": "",
+                "field_maxlength": "",
+                "field_minvalue": "",
+                "field_maxvalue": "",
+                "field_value_type": "",
+                "field_on_blur": "",
+                "field_error_msg_required": "",
+                "field_error_msg_minlength": "",
+                "field_error_msg_maxlength": "",
+                "field_error_msg_minvalue": "",
+                "field_error_msg_maxvalue": "",
+                "field_error_msg_uq": ""
+            }
+            
+            
+           
+            
+        ]
+    },
+    "xioFEConfig": {
+        "TabStyle": "",
+        "actionName": "",
+        "createLink": "",
+        "viewLink": "",
+        "createButtonText": "",
+        "viewButtonText": "",
+        "paragraphText": "",
+        "sideImageData": {
+            "img_heading": "",
+            "img_paragraph": ""
+        }
+    }
+}

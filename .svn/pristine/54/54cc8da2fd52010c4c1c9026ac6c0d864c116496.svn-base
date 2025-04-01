@@ -1,0 +1,62 @@
+import * as React from "react";
+import "../FormsElements/formstyle.css"
+import { Select, Text } from "@fluentui/react-components";
+import type { SelectProps } from "@fluentui/react-components";
+import { validateField } from "../utils/validations"; 
+
+interface Option {
+  option_label: string;
+  value: string;
+}
+
+interface Field {
+  field_id: string;
+  field_label: string;
+  field_mandatory: string;
+  field_options: Option[];
+  field_placeholder: string;
+  field_default_value: string;
+  field_error_msg_required: string;
+}
+
+interface SelectElementProps extends SelectProps {
+  field: Field;
+}
+
+const SelectElement: React.FC<SelectElementProps> = ({ field, ...props }) => {
+  const [selectedValue, setSelectedValue] = React.useState("");
+  const [error, setError] = React.useState("");
+
+  const handleBlur = (field: Field, value: string) => {
+    const errorMessage = validateField(field, value);
+    setError(errorMessage);
+  };
+
+  return (
+    <div className="formElem" style={{ display: "flex", flexDirection: "column" }}>
+      <label htmlFor={field.field_id}>{field.field_label}</label>
+      <Select
+        id={field.field_id}
+        required={field.field_mandatory === "yes"}
+        {...props}
+        defaultValue={field.field_default_value}
+        onChange={(e) => {
+          setSelectedValue(e.target.value);
+        }}
+        onBlur={() => handleBlur(field, selectedValue)}
+      >
+        <option value="" disabled>
+          {field.field_placeholder}
+        </option>
+        {field.field_options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.option_label}
+          </option>
+        ))}
+      </Select>
+      {error && <Text style={{ color: "red", fontSize: "12px" }}>{error}</Text>}
+    </div>
+  );
+};
+
+export default SelectElement;

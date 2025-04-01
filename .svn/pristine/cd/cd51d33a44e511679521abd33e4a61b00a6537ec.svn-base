@@ -1,0 +1,203 @@
+import * as React from "react";
+import tableConfig from "./tableConfig2.json";
+import PopupForm from "./PopUpForm";
+import {
+  EditRegular,
+  DeleteRegular,
+  OpenRegular,
+  PresenceBlockedRegular,
+} from "@fluentui/react-icons";
+import {
+  TableBody,
+  TableCell,
+  TableRow,
+  Table,
+  TableHeader,
+  TableHeaderCell,
+  TableCellLayout,
+  Button,
+  useArrowNavigationGroup,
+} from "@fluentui/react-components";
+
+interface TableItem {
+  senderID: string;
+  format: string;
+  type: string;
+  status: string;
+  creationdatetime: string;
+}
+
+const columns = tableConfig.columns;
+const actions = tableConfig.actions;
+
+interface DynamicTableProps {
+  data: TableItem[];
+}
+
+const DynamicTable: React.FC<DynamicTableProps> = ({ data }) => {
+  const keyboardNavAttr = useArrowNavigationGroup({ axis: "grid" });
+  const [isPopupOpen, setIsPopupOpen] = React.useState(false);
+  const [selectedRowData, setSelectedRowData] = React.useState<TableItem | null>(null);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const openPopup = (rowData: TableItem) => {
+    setSelectedRowData(rowData);
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
+
+  const totalPages = Math.ceil(data.length / rowsPerPage);
+  const startIndex = (currentPage - 1) * rowsPerPage;
+  const paginatedData = data.slice(startIndex, startIndex + rowsPerPage);
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  const handleRowsChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setCurrentPage(1);
+  };
+
+  return (
+    <div style={{ 
+      width: "100%", 
+      overflowX: "auto",
+      display: "flex",
+      flexDirection: "column",
+      height: "100%", // Ensure the container takes full height
+      minHeight: "500px" // Set a minimum height (adjust as needed)
+    }}>
+      {/* Table container with flex grow to take available space */}
+      <div style={{ flexGrow: 1, overflow: "auto" }}>
+        <Table 
+          {...keyboardNavAttr} 
+          role="grid" 
+          aria-label="Dynamic Table" 
+          style={{ width: "100%", tableLayout: "fixed" }}
+        >
+          <TableHeader>
+            <TableRow>
+              {columns.map((column) => (
+                <TableHeaderCell key={column.key}>{column.title}</TableHeaderCell>
+              ))}
+              <TableHeaderCell>Actions</TableHeaderCell>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {paginatedData.map((item, index) => (
+              <TableRow key={index} style={{ backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#e0e0e0" }}>
+                {columns.map((column) => (
+                  <TableCell key={column.key} role="gridcell">
+                    <TableCellLayout>{item[column.dataIndex as keyof TableItem]}</TableCellLayout>
+                  </TableCell>
+                ))}
+                <TableCell role="gridcell">
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    {actions.map((action, actionIndex) => (
+                      <Button
+                        key={actionIndex}
+                        icon={
+                          action.config.icon === "edit" ? <EditRegular /> :
+                          action.config.icon === "delete" ? <DeleteRegular /> :
+                          action.config.icon === "block" ? <PresenceBlockedRegular /> :
+                          <OpenRegular />
+                        }
+                        onClick={() => action.status === "Edit" && openPopup(item)}
+                        style={{ color: action.style.color }}
+                      />
+                    ))}
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+
+      {/* Pagination container fixed at the bottom */}
+      <div style={{ 
+        display: "flex", 
+        justifyContent: "space-between", 
+        alignItems: "center", 
+        padding: "10px", 
+        backgroundColor: "#f3f3f3", 
+        borderRadius: "10px",
+        marginTop: "auto" // This pushes it to the bottom
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <label style={{ fontSize: "14px", fontWeight: "bold" }}>Rows per page:</label>
+          <select 
+            value={rowsPerPage} 
+            onChange={handleRowsChange}
+            style={{ 
+              padding: "5px 10px", 
+              borderRadius: "5px", 
+              border: "1px solid #ccc", 
+              cursor: "pointer" 
+            }}
+          >
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+          </select>
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <button 
+            onClick={handlePrevPage} 
+            disabled={currentPage === 1}
+            style={{
+              padding: "8px 12px",
+              borderRadius: "5px",
+              border: "none",
+              cursor: currentPage === 1 ? "not-allowed" : "pointer",
+              backgroundColor: currentPage === 1 ? "#ccc" : "#007bff",
+              color: "white",
+              fontWeight: "bold"
+            }}
+          >
+            ◀ Prev
+          </button>
+
+          <span style={{ fontSize: "14px", fontWeight: "bold" }}>
+            Page {currentPage} of {totalPages}
+          </span>
+
+          <button 
+            onClick={handleNextPage} 
+            disabled={currentPage === totalPages}
+            style={{
+              padding: "8px 12px",
+              borderRadius: "5px",
+              border: "none",
+              cursor: currentPage === totalPages ? "not-allowed" : "pointer",
+              backgroundColor: currentPage === totalPages ? "#ccc" : "#007bff",
+              color: "white",
+              fontWeight: "bold"
+            }}
+          >
+            Next ▶
+          </button>
+        </div>
+      </div>
+
+      {isPopupOpen && (
+        <PopupForm 
+          formData={selectedRowData} 
+          closePopup={closePopup} 
+        />
+      )}
+    </div>
+  );
+};
+
+export default DynamicTable;

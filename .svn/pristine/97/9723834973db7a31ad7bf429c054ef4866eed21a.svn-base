@@ -1,0 +1,32 @@
+import * as React from "react";
+import { makeStyles, Input, Label } from "@fluentui/react-components";
+const useStyles = makeStyles({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "20px",
+
+    maxWidth: "400px",
+  },
+});
+
+const InputElement = ({ fields }) => {
+  const styles = useStyles();
+  return (
+    <div className={styles.root}>
+      {fields.map((field) => {
+        return (
+          <div style={{ display: "flex", padding: "10px" }}>
+            <Label htmlFor={field.field_id}>{field.field_label}</Label>
+            <Input
+              id={field.field_id}
+              placeholder={field.field_placeholder}
+              type={field.field_type}
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+export default InputElement;

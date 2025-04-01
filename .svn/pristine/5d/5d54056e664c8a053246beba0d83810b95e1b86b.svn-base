@@ -1,0 +1,140 @@
+{
+  "columns": [
+
+    {
+      "key": "senderID",
+      "title": "Enterprise Name",
+      "dataIndex": "senderID",
+      "inputType":"text",
+      "editing":true,
+      "filters": [
+        {
+          "text": "243213",
+          "value": "243213"
+        },
+        {
+          "text": "231312",
+          "value": "231312"
+        }
+        
+      ]
+    },
+    {
+      "key": "3",
+      "title": "API URL",
+      "dataIndex": "format"
+    },
+    {
+      "key": "4",
+      "title": "Payload",
+      "dataIndex": "type"
+    },
+    {
+      "key": "8",
+      "title": "Response Success",
+      "dataIndex": "type"
+    },
+    {
+      "key": "9",
+      "title": "Status",
+      "dataIndex": "status",
+      "statuses": [
+        {
+          "status": "Active",
+          "style": {
+            "color": "#118D57",
+            "backgroundColor": "#22c55e29"
+          }
+        },
+        {
+          "status": "Pending",
+          "style": {
+            "color": "#B76E00",
+            "backgroundColor": "#ff470029"
+          }
+        },
+        {
+          "status": "Inactive",
+          "style": {
+            "color": "#B71D18",
+            "backgroundColor": "#ff563029"
+          }
+        }
+      ]
+    },
+    {
+      "key": "10",
+      "title": "Created at",
+      "dataIndex": "creationdatetime"
+    }
+  ],
+  "actions": [
+    {
+      "status": "Edit",
+      "type":"page_edit",
+      "route":"/product/edit-product",
+      "auth": true,
+      "config": {
+        "apiPath": "/api/edit",
+        "method": "PUT",
+        "confirmation": {
+          "message": "Are you sure you want to update this record?",
+          "required": true
+        },
+        "tooltip": "Edit this record",
+        "icon": "edit"
+      },
+      "style": {
+        "color": "#1976D2",
+        "backgroundColor": ""
+      }
+    },
+    {
+      "status": "Delete",
+      "type":"",
+      "auth": true,
+      "config": {
+        "apiPath": "/api/delete",
+        "method": "DELETE",
+        "confirmation": {
+          "message": "Are you sure you want to delete this record? This action cannot be undone. !",
+          "required": true
+        },
+        "tooltip": "Delete this record",
+        "icon": "delete"
+      },
+      "style": {
+        "color": "#ff4d4f",
+        "backgroundColor": ""
+      }
+    },
+  
+    {
+      "status": "View",
+      "type":"",
+      "auth": true,
+      "config": {
+        "apiPath": "/api/view",
+        "method": "GET",
+        "tooltip": "View details",
+        "icon": "view"
+      },
+      "style": {
+        "color": "#52c41a",
+        "backgroundColor": "#E3F2FD"
+      }
+    }
+  ],
+  "apiConfig": {
+    "id": "id",
+    "apiContextSave": "enterprise",
+    "apiContextSearch": "",
+    "contextHeading": "Enterprise",
+    "deleteFlow": {
+      "contextHeading": "",
+      "auth": false,
+      "apiContext": "",
+      "deleteType": "single"
+    }
+  }
+}

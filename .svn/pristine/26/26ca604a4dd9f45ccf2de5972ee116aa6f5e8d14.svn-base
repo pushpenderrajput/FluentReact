@@ -1,0 +1,169 @@
+import React from "react";
+import SelectElement from "../FormsElements/SelectElement";
+import SearchableSelect from "../FormsElements/SearchableSelect";
+import MultiSelect from "../FormsElements/MultiSelect";
+const FormPage = () => {
+  const fields = [
+    
+  {
+    "field_id": "carrierid",
+    "field_label": "Carrier Name",
+    "field_value": "",
+    "field_default_value":"",
+    "field_mandatory": "yes",
+    "field_placeholder": "Select",
+    "field_option_src": {
+        "field_option_check_local_storage": "true",
+        "field_option_src_context": "organization",
+        "field_option_src_critieria": "all",
+        "field_option_label": "name",
+        "field_option_value": "organizationid",
+        "field_select_all_label": "",
+        "field_select_all_value": ""
+    },
+    "field_options": [
+        {
+            "option_label": "GTS",
+            "value": "0"
+        },
+        {
+          "option_label": "FinBraine",
+          "value": "1"
+      },
+      {
+        "option_label": "CERF",
+        "value": "2"
+    },
+    {
+      "option_label": "JIO",
+      "value": "3"
+  },
+  {
+    "option_label": "Airtel",
+    "value": "4"
+},
+{
+  "option_label": "Vodafone",
+  "value": "5"
+},
+{
+  "option_label": "Idea",
+  "value": "6"
+},
+{
+"option_label": "BSNL",
+"value": "7"
+},
+{
+"option_label": "Orange",
+"value": "8"
+},
+{
+  "option_label": "GTS",
+  "value": "0"
+},
+{
+"option_label": "FinBraine",
+"value": "1"
+},
+{
+"option_label": "CERF",
+"value": "2"
+},
+{
+"option_label": "JIO",
+"value": "3"
+},
+{
+"option_label": "Airtel",
+"value": "4"
+},
+{
+"option_label": "Vodafone",
+"value": "5"
+},
+{
+"option_label": "Idea",
+"value": "6"
+},
+{
+"option_label": "BSNL",
+"value": "7"
+},
+{
+"option_label": "Orange",
+"value": "8"
+},
+{
+  "option_label": "Aaa",
+  "value": "9"
+},
+{
+"option_label": "BBBBbbb",
+"value": "10"
+},
+{
+"option_label": "Ccccc",
+"value": "11"
+},
+{
+"option_label": "Dddd",
+"value": "12"
+},
+{
+"option_label": "Eeeee",
+"value": "13"
+},
+{
+"option_label":"Ffff",
+"value": "14"
+},
+{
+"option_label": "Gggg",
+"value": "15"
+},
+{
+"option_label": "Hhhh",
+"value": "16"
+},
+{
+"option_label": "Iiii",
+"value": "17"
+}
+    ],
+    "field_type": "searchableSelect",
+    "field_minlength": "",
+    "field_maxlength": "",
+    "field_minvalue": "",
+    "field_maxvalue": "",
+    "field_value_type": "",
+    "field_on_blur": "",
+    "field_error_msg_required": "",
+    "field_error_msg_minlength": "",
+    "field_error_msg_maxlength": "",
+    "field_error_msg_minvalue": "",
+    "field_error_msg_maxvalue": "",
+    "field_error_msg_uq": ""
+},
+  
+  ]
+  return (
+    <div>
+      <h2>Form Page</h2>
+      {fields.map((field) => {
+        return <>
+        <SelectElement key={field.field_id} field={{...field}}/>
+        <SearchableSelect key={field.field_id} field={{ ...field}} />
+        <MultiSelect key={field.field_id} field={{ ...field}}/>
+        </>
+    
+   
+})}
+
+
+      
+    </div>
+  );
+};
+
+export default FormPage;

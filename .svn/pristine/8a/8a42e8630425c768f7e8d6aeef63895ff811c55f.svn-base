@@ -1,0 +1,40 @@
+import * as React from "react";
+import { Select } from "@fluentui/react-components";
+import type { SelectProps } from "@fluentui/react-components";
+
+interface Option {
+  option_label: string;
+  value: string;
+}
+
+interface Field {
+  field_id: string;
+  field_type:string;
+  field_label: string;
+  field_default_value: string;
+  field_mandatory: string;
+  field_placeholder: string;
+  field_options: Option[];
+}
+
+interface SelectElementProps extends SelectProps {
+  field: Field;
+}
+
+const SelectElement: React.FC<SelectElementProps> = ({ field, ...props }) => {
+  return (
+    <div style={{display:"flex"}}>
+      <label htmlFor={field.field_id}>{field.field_label}</label>
+      <Select id={field.field_id} {...props} defaultValue={field.field_default_value}>
+        
+        {field.field_options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.option_label}
+          </option>
+        ))}
+      </Select>
+    </div>
+  );
+};
+
+export default SelectElement;

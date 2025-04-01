@@ -1,0 +1,16 @@
+import React from "react";
+import { useRoutes } from "react-router-dom";
+import FormPage from "./Form/create";
+import Data from "../modules/Dataa/view";
+import NotFound from "./NotFound/NotFound";
+const ModuleRoutes = () => {
+  const routes = [
+    { path: "home-page/form", element: <FormPage /> },
+    { path: "home-page/data", element: <Data /> },
+    { path: "*", element:<NotFound/> },
+  ];
+
+  return useRoutes(routes);
+};
+
+export default ModuleRoutes;

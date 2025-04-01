@@ -1,0 +1,73 @@
+import * as React from "react";
+// import "../FormsElements/formstyle.css"
+import { Field, Text, Label } from "@fluentui/react-components";
+import { DatePicker, DatePickerProps } from "@fluentui/react-datepicker-compat";
+import { validateField } from "./Configue/validations";
+
+interface Field {
+  field_id: string;
+  field_label: string;
+  field_value: string;
+  field_mandatory: string;
+  field_minvalue?: string;
+  field_placeholder?:string,
+  field_disabled?: string;
+  field_maxvalue?: string;
+  field_error_msg_required: string;
+}
+
+interface DateInputProps extends DatePickerProps {
+  field: Field;
+}
+
+const DateInput: React.FC<DateInputProps> = ({ field }) => {
+  // const [selectedDate, setSelectedDate] = React.useState<Date | null>(
+  //   field.field_value ? new Date(field.field_value) : null
+  // );
+  const [selectedDate, setSelectedDate] = React.useState<Date | null>(() => {
+    if (!field || !field.field_value) return null;
+    
+    try {
+      return new Date(field.field_value);
+    } catch (error) {
+      console.error("Invalid date format:", field.field_value);
+      return null;
+    }
+  });
+  
+  const [error, setError] = React.useState("");
+  // console.log(field)
+
+  const handleBlur = (field: Field, value: string) => {
+    const errorMessage = validateField(field, value);
+    setError(errorMessage);
+  };
+
+  return (
+    <div className="formElem" style={{display:"flex", flexDirection:"column"}}>
+    <Label htmlFor={field.field_id}>{field.field_label}</Label>
+      <DatePicker
+        id={field.field_id}
+        name={field.field_id}
+        value={selectedDate}
+        placeholder={field.field_placeholder}
+        minDate={field.field_minvalue ? new Date(field.field_minvalue) : undefined}
+        maxDate={field.field_maxvalue ? new Date(field.field_maxvalue) : undefined}
+        disabled={field.field_disabled === "yes"}
+        onSelectDate={(date) => {
+          setSelectedDate(date || null);
+          setError("");
+        }}
+        
+        onBlur={() => {
+          const dateValue = selectedDate ? selectedDate.toISOString() : "";
+          handleBlur(field, dateValue);
+        }}
+      />
+      {error && <Text style={{ color: "red", fontSize: "12px" }}>{error}</Text>}
+    {/* </Field> */}
+    </div>
+  );
+};
+
+export default DateInput;

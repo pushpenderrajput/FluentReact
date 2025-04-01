@@ -1,0 +1,48 @@
+import * as React from "react";
+import { makeStyles, Input, Label, Text, Display } from "@fluentui/react-components";
+
+const useStyles = makeStyles({
+ 
+  errorText: {
+    color: "red",
+    fontSize: "12px",
+  },
+});
+
+const InputElement = ({ fields }) => {
+  const styles = useStyles();
+  const [errors, setErrors] = React.useState({});
+
+  const validateField = (field, value) => {
+    let error = "";
+
+    if (field.field_mandatory === "yes" && !value) {
+      error = field.field_error_msg_required || "This field is required";
+    } else if (field.field_minlength && value.length < field.field_minlength) {
+      error = field.field_error_msg_minlength || `Minimum ${field.field_minlength} characters required`;
+    } else if (field.field_maxlength && value.length > field.field_maxlength) {
+      error = field.field_error_msg_maxlength || `Maximum ${field.field_maxlength} characters allowed`;
+    }
+    
+    setErrors((prev) => ({ ...prev, [field.field_id]: error }));
+  };
+
+  return (
+    <div style={{display:"flex"}}>
+      {fields.map((field) => (
+        <div key={field.field_id} style={{ display: "flex",flexDirection:"column" , padding:"10px"}}>
+          <Label htmlFor={field.field_id}>{field.field_label}</Label>
+          <Input
+            id={field.field_id}
+            placeholder={field.field_placeholder}
+            type={field.field_type}
+            onBlur={(e) => validateField(field, e.target.value)}
+          />
+          {errors[field.field_id] && <Text className={styles.errorText}>{errors[field.field_id]}</Text>}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default InputElement;

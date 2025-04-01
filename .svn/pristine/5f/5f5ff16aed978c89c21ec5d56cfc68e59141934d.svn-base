@@ -1,0 +1,63 @@
+import * as React from "react";
+import { Checkbox, CheckboxProps, Field, Text } from "@fluentui/react-components";
+import { validateField } from "../utils/validations";
+
+
+interface Option {
+  option_label: string;
+  value: string;
+}
+
+interface Field {
+  field_id: string;
+  field_label: string;
+  field_mandatory: string;
+  field_options: Option[];
+  field_placeholder: string;
+  field_default_value: string;
+  field_error_msg_required: string;
+}
+
+interface CheckboxElementProps extends CheckboxProps {
+  field: Field;
+}
+
+const CheckboxElement: React.FC<CheckboxElementProps> = ({ field }) => {
+  const [selectedValues, setSelectedValues] = React.useState<string[]>([]);
+  const [error, setError] = React.useState("");
+
+  const handleCheckboxChange = (value: string) => {
+    const newSelectedValues = selectedValues.includes(value)
+      ? selectedValues.filter((v) => v !== value) 
+      : [...selectedValues, value];
+      console.log(newSelectedValues);
+
+    setSelectedValues(newSelectedValues);
+    setError("");
+  };
+
+  const handleBlur = () => {
+    const errorMessage = validateField(field, selectedValues.join(","));
+    setError(errorMessage);
+  };
+
+  return (
+    <Field label={field.field_label}>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        {field.field_options.map((option) => (
+          
+          <Checkbox
+            key={option.value}
+            label={option.option_label}
+            checked={selectedValues.includes(option.value)}
+            onChange={() => handleCheckboxChange(option.value)}
+            onBlur={handleBlur}
+          />
+        ))}
+      </div>
+      {error && <Text style={{ color: "red", fontSize: "12px" }}>{error}</Text>}
+    </Field>
+  );
+};
+
+export default CheckboxElement;

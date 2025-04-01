@@ -1,0 +1,99 @@
+import * as React from "react";
+import tableConfig from "./tableConfig2.json";
+import FormPage from "./FormPage";
+import {
+  EditRegular,
+  DeleteRegular,
+  OpenRegular,
+  PresenceBlockedRegular,
+} from "@fluentui/react-icons";
+import {
+  TableBody,
+  TableCell,
+  TableRow,
+  Table,
+  TableHeader,
+  TableHeaderCell,
+  TableCellLayout,
+  Button,
+  useArrowNavigationGroup,
+} from "@fluentui/react-components";
+
+interface TableItem {
+  senderID: string;
+  format: string;
+  type: string;
+  status: string;
+  creationdatetime: string;
+}
+
+const columns = tableConfig.columns;
+const actions = tableConfig.actions;
+
+interface DynamicTableProps {
+  data: TableItem[];
+}
+
+const DynamicTable: React.FC<DynamicTableProps> = ({ data }) => {
+  const keyboardNavAttr = useArrowNavigationGroup({ axis: "grid" });
+  const [isPopupOpen, setIsPopupOpen] = React.useState(false);
+  const [selectedRowData, setSelectedRowData] = React.useState<TableItem | null>(null);
+
+  const openPopup = (rowData: TableItem) => {
+    setSelectedRowData(rowData);
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+    setSelectedRowData(null);
+  };
+
+  return (
+    <div style={{ width: "100%", overflowX: "auto" }}>
+      <Table {...keyboardNavAttr} role="grid" aria-label="Dynamic Table" style={{ width: "100%", tableLayout: "fixed" }}>
+        <TableHeader>
+          <TableRow>
+            {columns.map((column) => (
+              <TableHeaderCell key={column.key}>{column.title}</TableHeaderCell>
+            ))}
+            <TableHeaderCell>Actions</TableHeaderCell>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {data.map((item, index) => (
+            <TableRow key={index} style={{ backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#e0e0e0" }}>
+              {columns.map((column) => (
+                <TableCell key={column.key} role="gridcell">
+                  <TableCellLayout>{item[column.dataIndex as keyof TableItem]}</TableCellLayout>
+                </TableCell>
+              ))}
+              <TableCell role="gridcell">
+                <div style={{ display: "flex", gap: "8px" }}>
+                  {actions.map((action, actionIndex) => (
+                    <Button
+                      key={actionIndex}
+                      icon={
+                        action.config.icon === "edit" ? <EditRegular /> :
+                        action.config.icon === "delete" ? <DeleteRegular /> :
+                        action.config.icon === "block" ? <PresenceBlockedRegular /> :
+                        <OpenRegular />
+                      }
+                      onClick={() => action.status === "Edit" && openPopup(item)}
+                      style={{ color: action.style.color }}
+                    />
+                  ))}
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+
+     
+      {isPopupOpen && <FormPage formData={selectedRowData}  />}
+    </div>
+  );
+};
+
+export default DynamicTable;

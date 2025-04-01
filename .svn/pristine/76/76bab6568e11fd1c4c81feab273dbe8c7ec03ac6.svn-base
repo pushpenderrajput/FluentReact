@@ -1,0 +1,62 @@
+import * as React from "react";
+// import "../FormsElements/formstyle.css"
+import { Field, Text } from "@fluentui/react-components";
+import { validateField } from "./Configue/validations";
+
+interface Field {
+  field_id: string;
+  field_label: string;
+  field_mandatory: string;
+  field_placeholder?: string;
+  field_value?: string;
+  field_acceptfile?: string;
+  field_preview?: boolean;
+  field_error_msg_required?: string;
+}
+
+interface FileUploadElementProps {
+  field: Field;
+  // style:React.CSSProperties;
+}
+
+const FileUploadElement: React.FC<FileUploadElementProps> = ({ field }) => {
+  const [file, setFile] = React.useState<File | null>(null);
+  const [error, setError] = React.useState("");
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0] || null;
+    console.log(selectedFile)
+    setFile(selectedFile);
+    setError(""); 
+  };
+
+  const handleBlur = () => {
+    const errorMessage = validateField(field, file ? file.name : "");
+    setError(errorMessage);
+  };
+
+  return (
+    <div className="formElem" style={{display:"flex", flexDirection:"column"}}>
+    <Field label={field.field_label}>
+      <input
+        type="file"
+        name={field.field_id}
+        id={field.field_id}
+        placeholder={field.field_placeholder}
+        accept={field.field_acceptfile} 
+        onChange={handleFileChange}
+        onBlur={handleBlur}
+        style={{ height:"28px",  border: "1px solid #ccc", borderRadius: "4px", background:"white" }} 
+      />
+      {field.field_preview && file && (
+        <div style={{ marginTop: "10px" }}>
+          <Text>Selected File: {file.name}</Text>
+        </div>
+      )}
+      {error && <Text style={{ color: "red", fontSize: "12px" }}>{error}</Text>}
+    </Field>
+    </div>
+  );
+};
+
+export default FileUploadElement;

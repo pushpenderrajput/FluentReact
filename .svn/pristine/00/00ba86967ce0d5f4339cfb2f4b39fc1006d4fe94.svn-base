@@ -1,0 +1,97 @@
+import React from 'react';
+import { SearchBox, Stack, Persona, PersonaSize, mergeStyles } from '@fluentui/react';
+import { Home24Regular, Info24Regular, Settings24Regular } from '@fluentui/react-icons';
+import img from "../assets/img/img.png";
+
+const headerStyles = mergeStyles({
+  width: '100%',
+  height: '64px',
+  backgroundColor: '#ffffff',
+  color: '#333',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: '0 24px',
+  boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+  boxSizing: 'border-box',
+  borderBottom: '2px solid #e0e0e0',
+});
+
+const navItemStyles = mergeStyles({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '10px',
+  padding: '12px 16px',
+  fontSize: '15px',
+  fontWeight: 600,
+  cursor: 'pointer',
+  borderRadius: '8px',
+  transition: 'background 0.3s ease, transform 0.2s ease',
+  selectors: {
+    '&:hover': {
+      backgroundColor: '#f0f0f0',
+      transform: 'scale(1.05)',
+    },
+  },
+});
+
+const searchBoxStyles = mergeStyles({
+  width: '280px',
+  flexShrink: 0,
+  borderRadius: '8px',
+  boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
+});
+
+const userAvatarStyles = mergeStyles({
+  cursor: 'pointer',
+  borderRadius: '50%',
+  padding: '6px',
+  transition: 'background 0.3s ease, transform 0.2s ease',
+  selectors: {
+    '&:hover': {
+      backgroundColor: '#f0f0f0',
+      transform: 'scale(1.1)',
+    },
+  },
+});
+
+const Header: React.FC = () => {
+  return (
+    <div className={headerStyles}>
+      <Stack horizontal tokens={{ childrenGap: 24 }} styles={{ root: { flexShrink: 0 } }}>
+        <div className={navItemStyles}>
+          <Home24Regular />
+          <span>Home</span>
+        </div>
+        <div className={navItemStyles}>
+          <Info24Regular />
+          <span>About</span>
+        </div>
+        <div className={navItemStyles}>
+          <Settings24Regular />
+          <span>Settings</span>
+        </div>
+      </Stack>
+
+      <div className={searchBoxStyles}>
+        <SearchBox
+          placeholder="Search..."
+          onSearch={(newValue) => console.log('Search:', newValue)}
+          underlined
+        />
+      </div>
+
+   
+      <div className={userAvatarStyles}>
+        <Persona
+          size={PersonaSize.size48}
+          imageUrl={img}
+          text="Pushpender Rajput"
+          hidePersonaDetails
+        />
+      </div>
+    </div>
+  );
+};
+
+export default Header;

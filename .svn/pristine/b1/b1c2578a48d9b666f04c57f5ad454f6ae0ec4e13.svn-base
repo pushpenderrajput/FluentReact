@@ -1,0 +1,72 @@
+
+import * as React from "react";
+import LineChart from  '../LineChart';
+import {
+  makeStyles,
+  Body1,
+  Caption1,
+  Button,
+  Card,
+  CardFooter,
+  CardHeader,
+  CardPreview,
+} from "@fluentui/react-components";
+import { ArrowReplyRegular, ShareRegular } from "@fluentui/react-icons";
+
+
+
+const useStyles = makeStyles({
+  card: {
+    margin: "auto",
+    width: "720px",
+    maxWidth: "100%",
+  },
+});
+const data=[
+  {
+    'title':"total sale",
+    "amount":"550"
+  },
+  {
+    'title':"total profit",
+    "amount":"200"
+  }
+]
+
+export default function Home () {
+  const styles = useStyles();
+return(
+  <div>
+  <div style={{display:"flex",gap:"1rem"}}>
+    {
+    data.map((sale)=>{
+      return(
+      <Card className={styles.card}>
+      <CardHeader
+        
+        header={
+          <Body1>
+          <h1>{sale.title}</h1>
+          </Body1>
+        }
+        
+      />
+
+      <CardPreview
+       
+      >
+        <h1 style={{marginLeft:"2rem"}}>${sale.amount}</h1>
+      </CardPreview>
+
+      
+    </Card>
+      )}
+    
+    )}
+    </div>
+    <div>
+      <LineChart/>
+    </div>
+    </div>
+  );
+};

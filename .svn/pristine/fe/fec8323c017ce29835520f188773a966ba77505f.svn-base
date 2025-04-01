@@ -1,0 +1,60 @@
+import * as React from "react";
+import { RadioGroup, Radio, Field, Text } from "@fluentui/react-components";
+import { validateField } from "../utils/validations";
+
+
+interface FieldOption {
+  value: string;
+  option_label: string;
+}
+
+interface Field {
+  field_id: string;
+  field_label: string;
+  field_mandatory: string;
+  field_options: FieldOption[];
+  field_placeholder: string;
+  field_default_value: string;
+  field_error_msg_required: string;
+}
+
+interface RadioElementProps {
+  field: Field;
+}
+
+const RadioElement: React.FC<RadioElementProps> = ({ field }) => {
+  const [selectedValue, setSelectedValue] = React.useState<string>("");
+  const [error, setError] = React.useState("");
+
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedValue(e.target.value);
+    setError(""); 
+  };
+
+  const handleBlur = () => {
+    const errorMessage = validateField(field, selectedValue);
+    setError(errorMessage);
+  };
+
+  return (
+    <Field label={field.field_label}>
+      <RadioGroup onBlur={handleBlur}>
+        {field.field_options.map((option) => (
+          
+          <Radio
+            key={option.value}
+            value={option.value}
+            label={option.option_label}
+            checked={selectedValue === option.value}
+            onChange={handleChange}
+          />
+        
+        ))}
+      </RadioGroup>
+      {error && <Text style={{ color: "red", fontSize: "12px" }}>{error}</Text>}
+    </Field>
+  );
+};
+
+export default RadioElement;

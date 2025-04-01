@@ -1,0 +1,79 @@
+import * as React from "react";
+import "../FormsElements/formstyle.css"
+import { Field, Text, Dropdown, Option, OptionOnSelectData, SelectionEvents } from "@fluentui/react-components";
+import { validateField } from "./Configue/validations";
+
+interface Field {
+  field_id: string;
+  field_label: string;
+  field_value?: string;
+  field_mandatory: string;
+  field_minvalue?: string;
+  field_placeholder?: string;
+  field_disabled?: string;
+  field_maxvalue?: string;
+  field_error_msg_required: string;
+}
+
+interface TimePickerProps {
+  field: Field;
+  // style:React.CSSProperties;
+}
+
+const TimePicker: React.FC<TimePickerProps> = ({ field }) => {
+  const [selectedTime, setSelectedTime] = React.useState<string | undefined>(
+    field.field_value || ""
+  );
+  const [error, setError] = React.useState("");
+
+  const generateTimeOptions = () => {
+    const times = [];
+    for (let hour = 0; hour < 24; hour++) {
+      for (let minute = 0; minute < 60; minute += 30) {
+        const time = `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+        times.push(time);
+      }
+    }
+    return times;
+  };
+
+  const timeOptions = generateTimeOptions();
+
+
+  const handleTimeChange = (event: SelectionEvents, data: OptionOnSelectData) => {
+    if (data.optionValue) {
+      setSelectedTime(data.optionValue);
+      setError(""); 
+      console.log("Selected Time:", data.optionValue); 
+    }
+  };
+
+  const handleBlur = () => {
+    const errorMessage = validateField(field, selectedTime || "");
+    setError(errorMessage);
+  };
+
+  return (
+    <div className="formElem" style={{ display: "flex", flexDirection: "column"}}>
+    <Field label={field.field_label}>
+      <Dropdown
+        id={field.field_id}
+        placeholder={field.field_placeholder || "Select time"}
+        selectedOptions={[selectedTime || ""]}
+        disabled={field.field_disabled === "yes"}
+        onOptionSelect={handleTimeChange}
+        onBlur={handleBlur}
+      >
+        {timeOptions.map((time) => (
+          <Option key={time} value={time}>
+            {time}
+          </Option>
+        ))}
+      </Dropdown>
+      {error && <Text style={{ color: "red", fontSize: "12px" }}>{error}</Text>}
+    </Field>
+    </div>
+  );
+};
+
+export default TimePicker;

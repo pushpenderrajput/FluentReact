@@ -1,0 +1,44 @@
+import * as React from "react";
+import "../FormsElements/formstyle.css"
+import { Input, Label } from "@fluentui/react-components";
+import { validateField } from "./Configue/validations";
+
+interface Field {
+  field_id: string;
+  field_value: string;
+  field_label: string;
+  field_placeholder: string;
+  field_type: string;
+  field_mandatory?: string;
+  field_error_msg_required?: string;
+  field_default_value?: string;
+}
+
+interface InputElementProps {
+  field: Field; 
+  style?: React.CSSProperties; 
+}
+
+const InputElement: React.FC<InputElementProps> = ({ field, style }) => {
+  const [error, setError] = React.useState("");
+console.log(field)
+  const handleBlur = (value: string) => {
+    const errorMessage = validateField(field, value);
+    setError(errorMessage);
+  };
+
+  return (
+    <div className="formElem" style={{ display: "flex", flexDirection: "column"}}>
+      <Label htmlFor={field.field_id}>{field.field_label}</Label>
+      <Input
+        id={field.field_id}
+        placeholder={field.field_placeholder}
+        type={field.field_type as "number" | "search" | "time" | "text" | "tel" | "url" | "email" | "date" | "password" | "datetime-local" | "month" | "week"}
+        onBlur={(e) => handleBlur(e.target.value)}
+      />
+      {error && <span style={{ color: "red", fontSize: "12px" }}>{error}</span>}
+    </div>
+  );
+};
+
+export default InputElement;

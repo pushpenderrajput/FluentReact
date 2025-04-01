@@ -1,0 +1,79 @@
+import React from 'react';
+import Controls from './controller';
+
+export interface FieldOption {
+  option_label: string;
+  value: string;
+}
+
+export interface FieldOptionSrc {
+  field_option_check_local_storage: string;
+  field_option_src_context: string;
+  field_option_src_critieria: string;
+  field_option_label: string;
+  field_option_value: string;
+  field_select_all_label: string;
+  field_select_all_value: string;
+  field_option_attributes: string[];
+}
+
+export interface Field {
+  field_id: string;
+  field_label: string;
+  field_placeholder: string;
+  field_value: string;
+  field_default_value: string;
+  field_mandatory: string;
+  field_type: string;
+  field_option_src: FieldOptionSrc;
+  field_options: FieldOption[];
+  field_minlength: string;
+  field_maxlength: string;
+  field_minvalue: string;
+  field_maxvalue: string;
+  field_value_type: string;
+  field_past_Disable: string;
+  field_on_blur: string;
+  field_disabled: string;
+  field_error_msg_required: string;
+  field_error_msg_minlength: string;
+  field_error_msg_maxlength: string;
+  field_error_msg_minvalue: string;
+  field_error_msg_maxvalue: string;
+  field_error_msg_uq: string;
+}
+
+
+interface ElementProps {
+  field: Field;
+  value: any;
+  onChange:any;
+}
+
+const Element: React.FC<ElementProps> = ({ field }) => {
+  if (!field) {
+    console.warn("Field is undefined in Element");
+    return null;
+  }
+    switch (field.field_type) {
+      // case 'button': return Controls.InputElement;
+      case 'text':
+      case 'email':
+      case 'phone':
+      case 'number': return <Controls.InputElement field={field} />;
+      case 'multilineText': return <Controls.MultilineText field={field} />;
+      case 'select': return <Controls.SelectElement field={field} />;
+      case 'searchableSelect' : return <Controls.SearchableSelect field={field}/>;
+      case 'multiSelect': return <Controls.MultiSelect field={field} />;
+      case 'checkbox': return <Controls.CheckBoxElement field={field} />;
+      case 'radio': return <Controls.RadioElements field={field} />;
+      case 'date': return <Controls.DateInput field={field} />;
+      case 'time': return <Controls.TimePicker field={field} />;
+      // case 'uploadFile': return <Controls.UploadFile field={field} />;
+      // case 'startDateToEndDate' : return <Controls.RangePicker field = {field}/>;
+      default: return null;
+    }
+};
+
+export default Element;
+

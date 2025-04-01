@@ -1,0 +1,72 @@
+import * as React from 'react';
+import DynamicTable from './Table';
+
+const dataItems = [
+  {
+    senderID: "243213",
+    format: "https://api.example.com",
+    type: "JSON",
+    status: "Active",
+    creationdatetime: "2025-03-24",
+  },
+  {
+    senderID: "231312",
+    format: "https://api.sample.com",
+    type: "XML",
+    status: "Pending",
+    creationdatetime: "2025-03-23",
+  },
+  {
+    senderID: "231312",
+    format: "https://api.sample.com",
+    type: "XML",
+    status: "Pending",
+    creationdatetime: "2025-03-23",
+  },
+  {
+    senderID: "231312",
+    format: "https://api.sample.com",
+    type: "XML",
+    status: "Pending",
+    creationdatetime: "2025-03-23",
+  },
+  {
+    senderID: "231312",
+    format: "https://api.sample.com",
+    type: "XML",
+    status: "Pending",
+    creationdatetime: "2025-03-23",
+  },
+  {
+    senderID: "231312",
+    format: "https://api.sample.com",
+    type: "XML",
+    status: "Pending",
+    creationdatetime: "2025-03-23",
+  },
+  {
+    senderID: "231312",
+    format: "https://api.sample.com",
+    type: "XML",
+    status: "Pending",
+    creationdatetime: "2025-03-23",
+  },
+  {
+    senderID: "231312",
+    format: "https://api.sample.com",
+    type: "XML",
+    status: "Pending",
+    creationdatetime: "2025-03-23",
+  },
+  
+];
+
+const Data = () => {
+  return (
+    <div>
+      <DynamicTable data={dataItems} />
+    </div>
+  );
+};
+
+export default Data;

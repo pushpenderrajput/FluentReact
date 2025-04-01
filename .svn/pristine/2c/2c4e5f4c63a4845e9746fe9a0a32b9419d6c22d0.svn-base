@@ -1,0 +1,805 @@
+{
+    "table": {
+      "title": "Enterprise Data Table",
+      "description": "A customizable table for displaying enterprise data.",
+      "columns": [
+        {
+          "key": "id",
+          "label": "ID",
+          "sortable": true,
+          "filterable": true,
+          "width": "100px"
+        },
+        {
+          "key": "name",
+          "label": "Name",
+          "sortable": true,
+          "filterable": true,
+          "width": "150px"
+        },
+        {
+          "key": "category",
+          "label": "Category",
+          "sortable": true,
+          "filterable": true,
+          "width": "150px"
+        },
+        {
+          "key": "status",
+          "label": "Status",
+          "sortable": true,
+          "filterable": true,
+          "width": "120px"
+        },
+        {
+          "key": "value",
+          "label": "Value",
+          "sortable": true,
+          "filterable": false,
+          "width": "120px"
+        },
+        {
+          "key": "actions",
+          "label": "Actions",
+          "sortable": false,
+          "filterable": false,
+          "width": "250px"
+        }
+      ],
+      "pagination": {
+        "enabled": true,
+        "pageSize": 10,
+        "pageSizeOptions": [5, 10, 20, 100]
+      },
+      "sorting": {
+        "enabled": true,
+        "defaultSortKey": "id",
+        "defaultSortOrder": "asc"
+      },
+      "filtering": {
+        "enabled": true,
+        "filters": [
+          {
+            "key": "category",
+            "label": "Category",
+            "type": "dropdown",
+            "options": ["Category A", "Category B", "Category C"]
+          },
+          {
+            "key": "status",
+            "label": "Status",
+            "type": "dropdown",
+            "options": ["Active", "Inactive", "Pending"]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "label": "View",
+          "actionKey": "view",
+          "type": "button",
+          "icon": "",
+          "style": "primary"
+        },
+        {
+          "label": "Edit",
+          "actionKey": "edit",
+          "type": "button",
+          "icon": "",
+          "style": "secondary"
+        },
+        {
+          "label": "Delete",
+          "actionKey": "delete",
+          "type": "button",
+          "icon": "",
+          "style": "outline"
+        }
+      ]
+    },
+   "tableData": {
+    "rows": [
+        
+      {
+        "id": 1,
+        "name": "Item 1",
+        "category": "Category A",
+        "status": "Active",
+        "value": 100
+      },
+      {
+        "id": 2,
+        "name": "Item 2",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 200
+      },
+      {
+        "id": 3,
+        "name": "Item 3",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 150
+      },
+      {
+        "id": 4,
+        "name": "Item 4",
+        "category": "Category A",
+        "status": "Active",
+        "value": 300
+      },
+      {
+        "id": 5,
+        "name": "Item 5",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 250
+      },
+      {
+        "id": 6,
+        "name": "Item 6",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 400
+      },
+      {
+        "id": 7,
+        "name": "Item 7",
+        "category": "Category A",
+        "status": "Active",
+        "value": 500
+      },
+      {
+        "id": 8,
+        "name": "Item 8",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 350
+      },
+      {
+        "id": 9,
+        "name": "Item 9",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 450
+      },
+      {
+        "id": 10,
+        "name": "Item 10",
+        "category": "Category A",
+        "status": "Active",
+        "value": 600
+      },
+      {
+        "id": 11,
+        "name": "Item 11",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 700
+      },
+      {
+        "id": 12,
+        "name": "Item 12",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 550
+      },
+      {
+        "id": 13,
+        "name": "Item 13",
+        "category": "Category A",
+        "status": "Active",
+        "value": 800
+      },
+      {
+        "id": 14,
+        "name": "Item 14",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 900
+      },
+      {
+        "id": 15,
+        "name": "Item 15",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 750
+      },
+      {
+        "id": 16,
+        "name": "Item 16",
+        "category": "Category A",
+        "status": "Active",
+        "value": 1000
+      },
+      {
+        "id": 17,
+        "name": "Item 17",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 1100
+      },
+      {
+        "id": 18,
+        "name": "Item 18",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 950
+      },
+      {
+        "id": 19,
+        "name": "Item 19",
+        "category": "Category A",
+        "status": "Active",
+        "value": 1200
+      },
+      {
+        "id": 20,
+        "name": "Item 20",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 1300
+      },
+      {
+        "id": 21,
+        "name": "Item 21",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 1150
+      },
+      {
+        "id": 22,
+        "name": "Item 22",
+        "category": "Category A",
+        "status": "Active",
+        "value": 1400
+      },
+      {
+        "id": 23,
+        "name": "Item 23",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 1500
+      },
+      {
+        "id": 24,
+        "name": "Item 24",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 1350
+      },
+      {
+        "id": 25,
+        "name": "Item 25",
+        "category": "Category A",
+        "status": "Active",
+        "value": 1600
+      },
+      {
+        "id": 26,
+        "name": "Item 26",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 1700
+      },
+      {
+        "id": 27,
+        "name": "Item 27",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 1550
+      },
+      {
+        "id": 28,
+        "name": "Item 28",
+        "category": "Category A",
+        "status": "Active",
+        "value": 1800
+      },
+      {
+        "id": 29,
+        "name": "Item 29",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 1900
+      },
+      {
+        "id": 30,
+        "name": "Item 30",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 1750
+      },
+      {
+        "id": 31,
+        "name": "Item 31",
+        "category": "Category A",
+        "status": "Active",
+        "value": 2000
+      },
+      {
+        "id": 32,
+        "name": "Item 32",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 2100
+      },
+      {
+        "id": 33,
+        "name": "Item 33",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 1950
+      },
+      {
+        "id": 34,
+        "name": "Item 34",
+        "category": "Category A",
+        "status": "Active",
+        "value": 2200
+      },
+      {
+        "id": 35,
+        "name": "Item 35",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 2300
+      },
+      {
+        "id": 36,
+        "name": "Item 36",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 2150
+      },
+      {
+        "id": 37,
+        "name": "Item 37",
+        "category": "Category A",
+        "status": "Active",
+        "value": 2400
+      },
+      {
+        "id": 38,
+        "name": "Item 38",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 2500
+      },
+      {
+        "id": 39,
+        "name": "Item 39",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 2350
+      },
+      {
+        "id": 40,
+        "name": "Item 40",
+        "category": "Category A",
+        "status": "Active",
+        "value": 2600
+      },
+      {
+        "id": 41,
+        "name": "Item 41",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 2700
+      },
+      {
+        "id": 42,
+        "name": "Item 42",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 2550
+      },
+      {
+        "id": 43,
+        "name": "Item 43",
+        "category": "Category A",
+        "status": "Active",
+        "value": 2800
+      },
+      {
+        "id": 44,
+        "name": "Item 44",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 2900
+      },
+      {
+        "id": 45,
+        "name": "Item 45",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 2750
+      },
+      {
+        "id": 46,
+        "name": "Item 46",
+        "category": "Category A",
+        "status": "Active",
+        "value": 3000
+      },
+      {
+        "id": 47,
+        "name": "Item 47",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 3100
+      },
+      {
+        "id": 48,
+        "name": "Item 48",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 2950
+      },
+      {
+        "id": 49,
+        "name": "Item 49",
+        "category": "Category A",
+        "status": "Active",
+        "value": 3200
+      },
+      {
+        "id": 50,
+        "name": "Item 50",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 3300
+      },
+      {
+        "id": 1,
+        "name": "Item 1",
+        "category": "Category A",
+        "status": "Active",
+        "value": 100
+      },
+      {
+        "id": 2,
+        "name": "Item 2",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 200
+      },
+      {
+        "id": 3,
+        "name": "Item 3",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 150
+      },
+      {
+        "id": 4,
+        "name": "Item 4",
+        "category": "Category A",
+        "status": "Active",
+        "value": 300
+      },
+      {
+        "id": 5,
+        "name": "Item 5",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 250
+      },
+      {
+        "id": 6,
+        "name": "Item 6",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 400
+      },
+      {
+        "id": 7,
+        "name": "Item 7",
+        "category": "Category A",
+        "status": "Active",
+        "value": 500
+      },
+      {
+        "id": 8,
+        "name": "Item 8",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 350
+      },
+      {
+        "id": 9,
+        "name": "Item 9",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 450
+      },
+      {
+        "id": 10,
+        "name": "Item 10",
+        "category": "Category A",
+        "status": "Active",
+        "value": 600
+      },
+      {
+        "id": 11,
+        "name": "Item 11",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 700
+      },
+      {
+        "id": 12,
+        "name": "Item 12",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 550
+      },
+      {
+        "id": 13,
+        "name": "Item 13",
+        "category": "Category A",
+        "status": "Active",
+        "value": 800
+      },
+      {
+        "id": 14,
+        "name": "Item 14",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 900
+      },
+      {
+        "id": 15,
+        "name": "Item 15",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 750
+      },
+      {
+        "id": 16,
+        "name": "Item 16",
+        "category": "Category A",
+        "status": "Active",
+        "value": 1000
+      },
+      {
+        "id": 17,
+        "name": "Item 17",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 1100
+      },
+      {
+        "id": 18,
+        "name": "Item 18",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 950
+      },
+      {
+        "id": 19,
+        "name": "Item 19",
+        "category": "Category A",
+        "status": "Active",
+        "value": 1200
+      },
+      {
+        "id": 20,
+        "name": "Item 20",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 1300
+      },
+      {
+        "id": 21,
+        "name": "Item 21",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 1150
+      },
+      {
+        "id": 22,
+        "name": "Item 22",
+        "category": "Category A",
+        "status": "Active",
+        "value": 1400
+      },
+      {
+        "id": 23,
+        "name": "Item 23",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 1500
+      },
+      {
+        "id": 24,
+        "name": "Item 24",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 1350
+      },
+      {
+        "id": 25,
+        "name": "Item 25",
+        "category": "Category A",
+        "status": "Active",
+        "value": 1600
+      },
+      {
+        "id": 26,
+        "name": "Item 26",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 1700
+      },
+      {
+        "id": 27,
+        "name": "Item 27",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 1550
+      },
+      {
+        "id": 28,
+        "name": "Item 28",
+        "category": "Category A",
+        "status": "Active",
+        "value": 1800
+      },
+      {
+        "id": 29,
+        "name": "Item 29",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 1900
+      },
+      {
+        "id": 30,
+        "name": "Item 30",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 1750
+      },
+      {
+        "id": 31,
+        "name": "Item 31",
+        "category": "Category A",
+        "status": "Active",
+        "value": 2000
+      },
+      {
+        "id": 32,
+        "name": "Item 32",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 2100
+      },
+      {
+        "id": 33,
+        "name": "Item 33",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 1950
+      },
+      {
+        "id": 34,
+        "name": "Item 34",
+        "category": "Category A",
+        "status": "Active",
+        "value": 2200
+      },
+      {
+        "id": 35,
+        "name": "Item 35",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 2300
+      },
+      {
+        "id": 36,
+        "name": "Item 36",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 2150
+      },
+      {
+        "id": 37,
+        "name": "Item 37",
+        "category": "Category A",
+        "status": "Active",
+        "value": 2400
+      },
+      {
+        "id": 38,
+        "name": "Item 38",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 2500
+      },
+      {
+        "id": 39,
+        "name": "Item 39",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 2350
+      },
+      {
+        "id": 40,
+        "name": "Item 40",
+        "category": "Category A",
+        "status": "Active",
+        "value": 2600
+      },
+      {
+        "id": 41,
+        "name": "Item 41",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 2700
+      },
+      {
+        "id": 42,
+        "name": "Item 42",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 2550
+      },
+      {
+        "id": 43,
+        "name": "Item 43",
+        "category": "Category A",
+        "status": "Active",
+        "value": 2800
+      },
+      {
+        "id": 44,
+        "name": "Item 44",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 2900
+      },
+      {
+        "id": 45,
+        "name": "Item 45",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 2750
+      },
+      {
+        "id": 46,
+        "name": "Item 46",
+        "category": "Category A",
+        "status": "Active",
+        "value": 3000
+      },
+      {
+        "id": 47,
+        "name": "Item 47",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 3100
+      },
+      {
+        "id": 48,
+        "name": "Item 48",
+        "category": "Category C",
+        "status": "Pending",
+        "value": 2950
+      },
+      {
+        "id": 49,
+        "name": "Item 49",
+        "category": "Category A",
+        "status": "Active",
+        "value": 3200
+      },
+      {
+        "id": 50,
+        "name": "Item 50",
+        "category": "Category B",
+        "status": "Inactive",
+        "value": 3300
+      }
+    ]
+  }
+  }

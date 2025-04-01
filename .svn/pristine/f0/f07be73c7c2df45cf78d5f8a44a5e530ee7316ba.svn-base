@@ -1,0 +1,48 @@
+import * as React from "react";
+import { makeStyles, useId, Input, Label } from "@fluentui/react-components";
+import fields from './Input.json';
+const useStyles = makeStyles({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "20px",
+
+    maxWidth: "400px",
+    // Stack the label above the field (with 2px gap per the design system)
+    "> div": { display: "flex", flexDirection: "column", gap: "2px" },
+  },
+});
+
+export const Form = () => {
+  
+  const styles = useStyles();
+console.log(fields.Parameter.fields);
+  return (
+    <div className={styles.root}>
+    
+      {
+        fields.Parameter.fields.map((field)=>{
+         
+          return(
+            
+            <>
+              <div>
+                
+              
+             <Label size="large" htmlFor={field.field_id} >
+              {field.field_label}
+            </Label>
+            <Input id={field.field_id} placeholder={field.field_placeholder} type={field.field_type} size="large" />
+                
+              
+          </div> 
+            </>
+            
+          )
+        
+        })
+      }
+     
+    </div>
+  );
+};

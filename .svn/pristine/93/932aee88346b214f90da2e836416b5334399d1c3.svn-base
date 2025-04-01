@@ -1,0 +1,10 @@
+import React from "react";
+import NotFoundImg from "../../assets/img/NotFound.jpg"; 
+
+const NotFound = () => {
+  return (
+    <img src={NotFoundImg} style={{height:"100vh", width:"100vh"}} alt="Not Found" />
+  );
+};
+
+export default NotFound;

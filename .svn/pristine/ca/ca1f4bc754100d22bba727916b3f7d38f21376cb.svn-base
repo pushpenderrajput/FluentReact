@@ -1,0 +1,31 @@
+import * as React from "react";
+import { DatePicker } from "@fluentui/react-datepicker-compat";
+import { Field, makeStyles } from "@fluentui/react-components";
+import Fields from './Input.json';
+const fields= Fields.Parameter.fields;
+const useStyles = makeStyles({
+  control: {
+    maxWidth: "300px",
+  },
+});
+
+export const DateInput = () => {
+  const field = fields.find(f => f.field_type === "date");
+  const styles = useStyles()
+    console.log(field)
+    const arr=[];
+    arr.push(field);
+
+  
+    
+  return (
+    arr.map((date)=>{return(
+
+      <Field label={date.field_label}>
+       
+      <DatePicker id={date.field_id } value={date.field_value} minDate={date.field_minvalue} maxDate={date.field_maxvalue} disabled={date.field_disabled} required={date.field_error_msg_required}/>
+    </Field>
+    )})
+    
+  );
+};

@@ -1,0 +1,47 @@
+import * as React from "react";
+import { makeStyles, Input, Label, Text } from "@fluentui/react-components";
+import { validateField } from "../utils/validations";  
+
+const useStyles = makeStyles({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+    maxWidth: "400px",
+  },
+  errorText: {
+    color: "red",
+    fontSize: "12px",
+  },
+});
+
+const InputElement = ( {fields} ) => {
+  
+  const styles = useStyles();
+  const [errors, setErrors] = React.useState({});
+
+  const handleBlur = (field, value) => {
+    const errorMessage = validateField(field, value);
+    setErrors((prev) => ({ ...prev, [field.field_id]: errorMessage }));
+  };
+
+  return (
+    <div className={styles.root}>
+      {fields.map((field) => (
+        
+        <div key={field.field_id} style={{ display: "flex", flexDirection: "column" }}>
+          <Label htmlFor={field.field_id}>{field.field_label}</Label>
+          <Input
+            id={field.field_id}
+            placeholder={field.field_placeholder}
+            type={field.field_type}
+            onBlur={(e) => handleBlur(field, e.target.value)}
+          />
+          {errors[field.field_id] && <Text className={styles.errorText}>{errors[field.field_id]}</Text>}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default InputElement;

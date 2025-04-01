@@ -1,0 +1,143 @@
+import { DrawerProps } from "@fluentui/react-components";
+import * as React from "react";
+import { Link } from "react-router-dom";
+import {
+  Hamburger,
+  NavCategory,
+  NavCategoryItem,
+  NavDrawer,
+  NavDrawerBody,
+  NavDrawerHeader,
+  NavItem,
+  NavSubItem,
+  NavSubItemGroup,
+} from "@fluentui/react-nav-preview";
+
+import { Tooltip, makeStyles, tokens } from "@fluentui/react-components";
+
+const useStyles = makeStyles({
+  root: {
+    overflow: "hidden",
+    display: "flex",
+    height: "600px",
+  },
+  content: {
+    flex: "1",
+    padding: "16px",
+    display: "grid",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+  },
+});
+
+interface NavBarProps {
+  fields: {
+    key: string;
+    label: string;
+    icon: JSX.Element;
+    path: string;
+    children?: { key: string; label: string; path: string }[];
+  }[];
+}
+type DrawerType = Required<DrawerProps>["type"];
+
+const NavBar: React.FC<NavBarProps> = ({ fields }) => {
+  const styles = useStyles();
+  const [isOpen, setIsOpen] = React.useState(true);
+  const [type, setType] = React.useState<DrawerType>("inline");
+  const [isCompact, setIsCompact] = React.useState(false);
+
+  const updateType = () => {
+    const width = window.innerWidth;
+    if (width < 500) {
+      setType("overlay");
+      setIsOpen(false);
+      setIsCompact(true);
+    } else if (width >= 500 && width < 910) {
+      setType("inline");
+      setIsOpen(true);
+      setIsCompact(true);
+    } else {
+      setType("inline");
+      setIsOpen(true);
+      setIsCompact(false);
+    }
+  };
+
+  React.useEffect(() => {
+    updateType();
+    window.addEventListener("resize", updateType);
+    return () => window.removeEventListener("resize", updateType);
+  }, []);
+
+  const renderHamburgerWithToolTip = () => (
+    <Tooltip content="Navigation" relationship="label">
+      <Hamburger onClick={() => setIsOpen(!isOpen)} />
+    </Tooltip>
+  );
+
+  return (
+    <div style={{ display: "flex", height: "100vh" }} className={styles.root}>
+      {!isOpen && <div style={{ padding: "6px"}}>{renderHamburgerWithToolTip()}</div>}
+
+      <NavDrawer
+        defaultSelectedValue="1"
+        open={isOpen}
+        type={type}
+        onOpenChange={(_, { open }) => setIsOpen(open)}
+        style={{ height: "100vh", overflow: "hidden", width: isCompact ? "60px" : "250px" }}
+      >
+        <NavDrawerHeader> <Tooltip content="Close Navigation" relationship="label">
+            <Hamburger onClick={() => setIsOpen(!isOpen)} />
+          </Tooltip></NavDrawerHeader>
+
+        <NavDrawerBody style={{ height: "calc(100vh - 50px)", overflowY: "auto" }}>
+          {fields.map((field) =>
+            field.children ? (
+              <NavCategory key={field.key} value={field.key}>
+                <NavCategoryItem value={field.key} icon={field.icon}>
+                  {!isCompact && field.label}
+                </NavCategoryItem>
+                <NavSubItemGroup key={field.key} title={field.label}>
+                  {field.children.map((child) => (
+                    <NavSubItem key={child.key} value={child.key}>
+                      <Link
+                        to={child.path}
+                        style={{
+                          textDecoration: "none",
+                          color: "inherit",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        {!isCompact && child.label}
+                      </Link>
+                    </NavSubItem>
+                  ))}
+                </NavSubItemGroup>
+              </NavCategory>
+            ) : (
+              <Link
+                key={field.key}
+                to={field.path}
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <NavItem key={field.key} icon={field.icon} value={field.key}>
+                  {!isCompact && field.label}
+                </NavItem>
+              </Link>
+            )
+          )}
+        </NavDrawerBody>
+      </NavDrawer>
+      
+    </div>
+  );
+};
+
+export default NavBar;

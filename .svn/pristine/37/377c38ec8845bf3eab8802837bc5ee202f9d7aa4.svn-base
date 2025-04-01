@@ -1,0 +1,51 @@
+import * as React from "react";
+import { RadioGroup, Radio } from "@fluentui/react-components";
+
+// Define interfaces for the Field and FieldOption
+interface FieldOption {
+  value: string;
+  option_label: string;
+}
+
+interface FieldType {
+  field_label: string;
+  field_type: string;
+  field_options: FieldOption[];
+}
+
+// Define the props interface to include fields as a prop
+interface RadioElementProps {
+  fields: FieldType[];
+}
+
+const RadioElement: React.FC<RadioElementProps> = ({ fields }) => {
+  const field = fields.find(f => f.field_type === "radio");
+  const [selectedValue, setSelectedValue] = React.useState<string>("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+    setSelectedValue(e.target.value);
+  };
+
+  if (!field) {
+    return null; // In case no radio field is found
+  }
+
+  return (
+    <div>
+      <h3>{field.field_label}</h3>
+      <RadioGroup>
+        {field.field_options.map(option => (
+          <Radio 
+            key={option.value} 
+            value={option.value} 
+            label={option.option_label} 
+            onChange={handleChange} 
+          />
+        ))}
+      </RadioGroup>
+    </div>
+  );
+};
+
+export default RadioElement;

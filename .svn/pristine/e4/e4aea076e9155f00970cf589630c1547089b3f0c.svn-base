@@ -1,0 +1,271 @@
+import tableConfig from "../Pages/Table.json";
+import * as React from "react";
+import {
+  TableBody,
+  TableCell,
+  TableRow,
+  Table,
+  TableHeader,
+  TableHeaderCell,
+  TableCellLayout,
+  Button,
+  makeStyles,
+  tokens,
+} from "@fluentui/react-components";
+import { ChevronLeftRegular, ChevronRightRegular } from "@fluentui/react-icons";
+
+// Define a type for the row data
+type RowData = {
+  id: number;
+  name: string;
+  category: string;
+  status: string;
+  value: number;
+};
+
+const useStyles = makeStyles({
+  tableContainer: {
+    overflowX: "auto", 
+    width: "100%",
+  },
+  table: {
+    width: "100%", 
+    alignItems:"center"
+    
+  },
+  tableHeader: {
+    backgroundColor: tokens.colorNeutralBackground2,
+    fontWeight: "bold",
+    minWidth: "max-content", 
+  },
+  tableRowEven: {
+    backgroundColor: tokens.colorNeutralBackground1, 
+  },
+  tableRowOdd: {
+    backgroundColor: tokens.colorNeutralBackground2, 
+  },
+  actionCell: {
+    display: "flex",
+    gap: "6px",
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  statusActive: {
+    color: tokens.colorPaletteGreenForeground1,
+  },
+  statusInactive: {
+    color: tokens.colorPaletteRedForeground1,
+  },
+  statusPending: {
+    color: tokens.colorPaletteYellowForeground1,
+  },
+  actionButton: {
+    minWidth: "auto",
+    padding: "4px 8px",
+  },
+  paginationContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "8px",
+    marginTop: "16px",
+    flexWrap: "wrap", 
+  },
+  paginationButton: {
+    minWidth: "32px",
+    padding: "4px 6px",
+  },
+  dropdown: {
+    padding: "4px 8px",
+    borderRadius: "4px",
+    border: `1px solid ${tokens.colorNeutralStroke1}`,
+    backgroundColor: tokens.colorNeutralBackground1,
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: tokens.colorNeutralBackground2,
+    },
+    maxWidth: "100px", 
+  },
+  // mobileHidden: {
+  //   "@media (max-width: 600px)": {
+  //     display: "none", 
+  //   },
+  // },
+});
+
+const Data = () => {
+  const { columns, pagination } = tableConfig.table;
+  const { rows } = tableConfig.tableData;
+  const styles = useStyles();
+
+  
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [itemsPerPage, setItemsPerPage] = React.useState(pagination.pageSize);
+
+  
+  const totalPages = Math.ceil(rows.length / itemsPerPage);
+
+  
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = rows.slice(indexOfFirstItem, indexOfLastItem);
+
+  
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  
+  const handleItemsPerPageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setItemsPerPage(Number(event.target.value));
+    setCurrentPage(1); 
+  };
+
+  
+  const handleActionClick = (actionKey: string, row: RowData) => {
+    console.log(`Action: ${actionKey}`, row);
+  };
+
+  
+  const getButtonAppearance = (style: string) => {
+    switch (style) {
+      case "primary":
+        return "primary";
+      case "secondary":
+        return "secondary";
+      case "danger":
+        return "outline";
+      default:
+        return "primary";
+    }
+  };
+
+  return (
+    <div>
+      <h1>{tableConfig.table.title}</h1>
+      <p>{tableConfig.table.description}</p>
+
+  
+      <div className={styles.tableContainer}>
+        <Table aria-label={tableConfig.table.title} className={styles.table}>
+          <TableHeader>
+            <TableRow>
+              {columns.map((column) => (
+                <TableHeaderCell
+                  key={column.key}
+                  style={{ width: column.width }}
+                  className={styles.tableHeader}
+                >
+                  {column.label}
+                </TableHeaderCell>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {currentItems.map((row, index) => (
+              <TableRow
+                key={row.id}
+                className={index % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd}
+              >
+                {columns.map((column) => {
+                  if (column.key === "actions") {
+                    return (
+                      <TableCell key={column.key}>
+                        <div className={styles.actionCell}>
+                          {tableConfig.table.actions.map((action) => (
+                            <Button
+                              key={action.actionKey}
+                              appearance={getButtonAppearance(action.style)}
+                              onClick={() => handleActionClick(action.actionKey, row)}
+                              className={styles.actionButton}
+                            >
+                              {action.label}
+                            </Button>
+                          ))}
+                        </div>
+                      </TableCell>
+                    );
+                  }
+
+                  if (column.key === "status") {
+                    return (
+                      <TableCell key={column.key}>
+                        <span
+                          className={
+                            row.status === "Active"
+                              ? styles.statusActive
+                              : row.status === "Inactive"
+                              ? styles.statusInactive
+                              : styles.statusPending
+                          }
+                        >
+                          {row[column.key as keyof RowData]}
+                        </span>
+                      </TableCell>
+                    );
+                  }
+
+                  return (
+                    <TableCell
+                      key={column.key}
+                    
+                    >
+                      <TableCellLayout>
+                        {row[column.key as keyof RowData]}
+                      </TableCellLayout>
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+
+  
+      {pagination.enabled && (
+        <div className={styles.paginationContainer}>
+          <Button
+            icon={<ChevronLeftRegular />}
+            appearance="subtle"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={styles.paginationButton}
+          />
+          {Array.from({ length: totalPages }, (_, index) => (
+            <Button
+              key={index + 1}
+              appearance={currentPage === index + 1 ? "primary" : "subtle"}
+              onClick={() => handlePageChange(index + 1)}
+              className={styles.paginationButton}
+            >
+              {index + 1}
+            </Button>
+          ))}
+          <Button
+            icon={<ChevronRightRegular />}
+            appearance="subtle"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className={styles.paginationButton}
+          />
+
+          {/* Items per page dropdown */}
+          <select
+            value={itemsPerPage}
+            onChange={handleItemsPerPageChange}
+            className={styles.dropdown}
+          >
+            {pagination.pageSizeOptions.map((option) => (
+              <option key={option} value={option}>
+                {option} per page
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Data;

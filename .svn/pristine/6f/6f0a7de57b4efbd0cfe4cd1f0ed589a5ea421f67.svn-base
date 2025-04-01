@@ -1,0 +1,27 @@
+import * as React from "react";
+import { RadioGroup, Radio } from "@fluentui/react-components";
+import field from './Input.json';
+
+const fields= field.Parameter.fields;
+
+const RadioElement = () => {
+  const field = fields.find(f => f.field_type === "radio");
+  const [selectedValue, setSelectedValue] = React.useState("");
+
+ const handlechange=(e)=>{
+   console.log(e.target.value)
+ }
+
+  return (
+    <div>
+      <h3>{field.field_label}</h3>
+      <RadioGroup >
+        {field.field_options.map(option => (
+          <Radio key={option.value} value={option.value} label={option.option_label}  onChange={handlechange}/>
+        ))}
+      </RadioGroup>
+    </div>
+  );
+};
+
+export default RadioElement;

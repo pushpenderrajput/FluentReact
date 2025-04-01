@@ -1,0 +1,119 @@
+import React, { useState, useEffect } from "react";
+import Element from "../Components/FormsElements/Configue/Elements";
+import { Field } from "../Components/FormsElements/Configue/types";
+import { Button } from "@fluentui/react-components";
+import {CursorClickRegular} from "@fluentui/react-icons";
+
+
+
+
+const DynamicForm: React.FC<{ formData?: any; data:any; }> = ({ formData, data}) => {
+    const fields: Field[] = Array.isArray(data?.Parameter?.fields)
+  ? data.Parameter.fields.map((f: any) => ({
+      field_id: f.field_id || "",
+      field_label: f.field_label || "",
+      field_value: f.field_value || "",
+      field_mandatory: f.field_mandatory || "no",
+      field_placeholder: f.field_placeholder || "",
+      field_default_value: f.field_default_value || "",
+      field_type: f.field_type || "text",
+      field_option_src: f.field_option_src || null, 
+      field_disabled_Edit: f.field_disabled_Edit || "",
+      field_error_msg_required: f.field_error_msg_required || "",
+      field_option_attributes: f.field_option_attributes || [],
+      field_options: f.field_options || [], 
+      field_minlength: f.field_minlength || "",
+      field_maxlength: f.field_maxlength || "",
+      field_minvalue: f.field_minvalue || "",
+      field_maxvalue: f.field_maxvalue || "",
+      field_value_type: f.field_value_type || "",
+      field_past_Disable: f.field_past_Disable || "",
+      field_on_blur: f.field_on_blur || "",
+      field_disabled: f.field_disabled || "",
+      field_error_msg_minlength: f.field_error_msg_minlength || "",
+      field_error_msg_maxlength: f.field_error_msg_maxlength || "",
+      field_error_msg_minvalue: f.field_error_msg_minvalue || "",
+      field_error_msg_maxvalue: f.field_error_msg_maxvalue || "",
+      field_error_msg_uq: f.field_error_msg_uq || "",
+      field_apipath: f.field_apipath || "",
+    }))
+  : [];
+  const [formValues, setFormValues] = useState<{ [key: string]: any }>({});
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const openPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
+
+
+  useEffect(() => {
+    if (formData) {
+      setFormValues(formData);
+    }
+  }, [formData]);
+
+  const handleChange = (fieldId: string, value: any) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [fieldId]: value,
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Form Values:", formValues);
+   
+  };
+  const renderForm = () => (
+    <div>
+    
+    <form onSubmit={handleSubmit} style={{display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(300px, 1fr))", gap: "10px"}} >
+      {fields.map((field) => (
+         <Element
+         key={field.field_id}
+         field={field}
+         value={formValues[field.field_id] || ""}
+         onChange={handleChange}
+       />
+      ))}
+      <div style={{ gridColumn: "1 / -1", textAlign: "center" }}>
+      <Button type="submit" appearance="primary" icon={< CursorClickRegular/>}>
+        Submit
+      </Button>
+      </div>
+    </form>
+    </div>
+);
+
+  return (
+    <div>
+      {data?.xioFEConfig?.TabStyle === "popup" ?  (
+        <>
+          <button onClick={openPopup} className="formbtn">
+            Open Form
+          </button>
+          {isPopupOpen && (
+            <div className="popup-overlay">
+              <div className="popup-content">
+                <button onClick={closePopup} className="close-btn">
+                  &times;
+                </button>
+                {renderForm()}
+              </div>
+            </div>
+          )}
+        </>
+      ) : (
+        renderForm()
+      )}
+      
+      
+    </div>
+  );
+  
+};
+
+export default DynamicForm;

@@ -1,0 +1,113 @@
+import * as React from "react";
+import "../FormsElements/formstyle.css"
+import { Combobox, Option, Tag, TagGroup } from "@fluentui/react-components";
+import type { ComboboxProps } from "@fluentui/react-components";
+import { validateField } from "./Configue/validations"; 
+
+interface OptionType {
+  option_label: string;
+  value: string;
+}
+
+interface Field {
+  field_id: string;
+  field_label: string;
+  field_placeholder: string;
+  field_mandatory: string;
+  field_error_msg_required: string;
+  field_options: OptionType[];
+}
+
+interface MultiSelectProps extends ComboboxProps {
+  field: Field;
+}
+
+const MultiSelect: React.FC<MultiSelectProps> = ({ field, ...props }) => {
+  const [searchTerm, setSearchTerm] = React.useState<string>("");
+  const [selectedValues, setSelectedValues] = React.useState<OptionType[]>([]);
+  const [filteredOptions, setFilteredOptions] = React.useState<OptionType[]>(field.field_options);
+  const [error, setError] = React.useState<string>("");
+
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const search = event.target.value.toLowerCase();
+    setSearchTerm(search);
+
+    setFilteredOptions(
+      field.field_options.filter((option) =>
+        option.option_label.toLowerCase().includes(search)
+      )
+    );
+  };
+
+  
+  const handleSelect = (_event: React.SyntheticEvent, data: { optionValue?: string }) => {
+    if (!data.optionValue) return;
+
+    const selectedOption = field.field_options.find((option) => option.value === data.optionValue);
+
+    if (selectedOption && !selectedValues.some((item) => item.value === data.optionValue)) {
+      setSelectedValues([...selectedValues, selectedOption]);
+      setError(""); 
+    }
+
+    setSearchTerm("");
+    setFilteredOptions(field.field_options);
+  };
+
+  const handleDeselect = (value: string) => {
+    const updatedValues = selectedValues.filter((item) => item.value !== value);
+    setSelectedValues(updatedValues);
+  
+    const validationError = validateField(field, updatedValues.map((item) => item.value).join(", "));
+    setError(validationError);
+  };
+
+  const handleBlur = () => {
+    const validationError = validateField(field, selectedValues.map((item) => item.value).join(", "));
+    setError(validationError);
+  };
+  
+
+  return (
+    <div className="formElem" style={{ display: "flex", flexDirection: "column"}}>
+      <label htmlFor={field.field_id}>{field.field_label}</label>
+
+      <Combobox
+        id={field.field_id}
+        {...props}
+        onInput={handleInputChange}
+        onOptionSelect={handleSelect}
+        value={selectedValues.map((item) => item.option_label).join(", ")}
+        placeholder={selectedValues.length > 0 ? "" : field.field_placeholder}
+        onBlur={handleBlur}
+      >
+        {filteredOptions.map((option) => (
+          <Option key={option.value} value={option.value}>
+            {option.option_label}
+          </Option>
+        ))}
+      </Combobox>
+
+      {selectedValues.length > 0 && (
+        <TagGroup>
+          {selectedValues.map((item) => (
+            <Tag key={item.value} shape="rounded">
+              {item.option_label}
+              <span
+                style={{ marginLeft: "8px", cursor: "pointer", color: "red" }}
+                onClick={() => handleDeselect(item.value)}
+              >
+                ✖
+              </span>
+            </Tag>
+          ))}
+        </TagGroup>
+      )}
+
+      {error && <span style={{ color: "red", fontSize: "12px" }}>{error}</span>}
+    </div>
+  );
+};
+
+export default MultiSelect;

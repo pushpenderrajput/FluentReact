@@ -1,0 +1,74 @@
+import React from "react";
+import { Stack, ICommandBarItemProps, CommandBar } from "@fluentui/react";
+import {
+  Home24Regular,
+  Info24Regular,
+  Mail24Regular,
+  Person24Regular,
+  Settings24Regular,
+} from "@fluentui/react-icons";
+
+const Header = () => {
+  const menuItems: ICommandBarItemProps[] = [
+    { key: "home", text: "Home", onRenderIcon: () => <Home24Regular /> },
+    { key: "about", text: "About", onRenderIcon: () => <Info24Regular /> },
+    { key: "contact", text: "Contact", onRenderIcon: () => <Mail24Regular /> },
+    { key: "profile", text: "Profile", onRenderIcon: () => <Person24Regular /> },
+    { key: "settings", text: "Settings", onRenderIcon: () => <Settings24Regular /> },
+  ];
+
+  
+
+  return (
+    <Stack
+      horizontal
+      horizontalAlign="space-between"
+      verticalAlign="center"
+      styles={{
+        root: {
+            padding: "14px 24px",
+            backgroundColor: "#00add4", 
+            color: "white",
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+             
+          },
+      }}
+    >
+      <h2 style={{ margin: "0", color: "white", fontSize: "20px", fontWeight: "bold" }}>
+        Fluent UI App
+      </h2>
+
+     
+      <CommandBar
+        items={menuItems}
+       
+        styles={{
+          root: {
+            backgroundColor: "transparent",
+          },
+        }}
+        buttonAs={(props) => (
+          <span
+            style={{
+              display: "flex",
+              alignItems: "center",
+              padding: "8px 12px",
+              borderRadius: "5px",
+              transition: "background 0.3s ease",
+              cursor: "pointer",
+              color: "white",
+              fontSize: "16px",
+              fontWeight: "500",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#0078D4")}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
+          >
+            {props.onRenderIcon ? props.onRenderIcon(props) : null}
+            <span style={{ marginLeft: "8px" }}>{props.text}</span>
+          </span>
+        )}
+      />
+    </Stack>
+  );
+};
+export default Header;

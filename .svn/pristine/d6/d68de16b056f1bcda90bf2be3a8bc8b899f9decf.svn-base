@@ -1,0 +1,102 @@
+import * as React from 'react';
+import DynamicTable from './Table';
+
+
+const sampleData = [
+  {
+    customername: 'Pushpender',
+    invoiceid: 'INV12345',
+    invoicefrom: 'Company GTS',
+    invoiceto: 'Company CERF',
+    totalamount: 1000.5,
+    createdate: '2023-10-01',
+    invoiceduedate: '2023-10-15',
+    totalcalls: 50,
+    duration: 3000, 
+    username: 'Admin',
+  },
+  {
+    customername: 'Pushpender',
+    invoiceid: 'INV12345',
+    invoicefrom: 'Company GTS',
+    invoiceto: 'Company CERF',
+    totalamount: 1000.5,
+    createdate: '2023-10-01',
+    invoiceduedate: '2023-10-15',
+    totalcalls: 50,
+    duration: 3000, 
+    username: 'Admin',
+  },
+  {
+    customername: 'Pushpender',
+    invoiceid: 'INV12345',
+    invoicefrom: 'Company GTS',
+    invoiceto: 'Company CERF',
+    totalamount: 1000.5,
+    createdate: '2023-10-01',
+    invoiceduedate: '2023-10-15',
+    totalcalls: 50,
+    duration: 3000, 
+    username: 'Admin',
+  },
+  {
+    customername: 'Pushpender',
+    invoiceid: 'INV12345',
+    invoicefrom: 'Company GTS',
+    invoiceto: 'Company CERF',
+    totalamount: 1000.5,
+    createdate: '2023-10-01',
+    invoiceduedate: '2023-10-15',
+    totalcalls: 50,
+    duration: 3000, 
+    username: 'Admin',
+  },
+  {
+    customername: 'Pushpender',
+    invoiceid: 'INV12345',
+    invoicefrom: 'Company GTS',
+    invoiceto: 'Company CERF',
+    totalamount: 1000.5,
+    createdate: '2023-10-01',
+    invoiceduedate: '2023-10-15',
+    totalcalls: 50,
+    duration: 3000, 
+    username: 'Admin',
+  },
+  {
+    customername: 'Pushpender',
+    invoiceid: 'INV12345',
+    invoicefrom: 'Company GTS',
+    invoiceto: 'Company CERF',
+    totalamount: 1000.5,
+    createdate: '2023-10-01',
+    invoiceduedate: '2023-10-15',
+    totalcalls: 50,
+    duration: 3000, 
+    username: 'Admin',
+  },
+  {
+    customername: 'Pushpender',
+    invoiceid: 'INV12345',
+    invoicefrom: 'Company GTS',
+    invoiceto: 'Company CERF',
+    totalamount: 1000.5,
+    createdate: '2023-10-01',
+    invoiceduedate: '2023-10-15',
+    totalcalls: 50,
+    duration: 3000, 
+    username: 'Admin',
+  },
+  
+  ];
+
+const Data = () => {
+  return (
+    <div>
+      {/* <h1>Data Page</h1> */}
+      <DynamicTable data={sampleData} /> 
+    </div>
+  );
+};
+
+export default Data;

@@ -1,0 +1,152 @@
+import React, { useState } from 'react';
+import { SearchBox, Stack, Persona, PersonaSize, mergeStyles } from '@fluentui/react';
+import { Home24Regular, Info24Regular, Settings24Regular, SignOut24Regular } from '@fluentui/react-icons';
+import { Drawer, DrawerHeader, DrawerBody } from '@fluentui/react-components';
+import img from "../assets/img/img.png";
+
+const headerStyles = mergeStyles({
+  width: '100%',
+  height: '64px',
+  backgroundColor: '#ffffff',
+  color: '#333',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: '0 24px',
+  boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+  boxSizing: 'border-box',
+  borderBottom: '2px solid #e0e0e0',
+});
+
+const navItemStyles = mergeStyles({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '10px',
+  padding: '12px 16px',
+  fontSize: '15px',
+  fontWeight: 600,
+  cursor: 'pointer',
+  borderRadius: '8px',
+  transition: 'background 0.3s ease, transform 0.2s ease',
+  selectors: {
+    '&:hover': {
+      backgroundColor: '#f0f0f0',
+      transform: 'scale(1.05)',
+    },
+  },
+});
+
+const searchBoxStyles = mergeStyles({
+  width: '280px',
+  flexShrink: 0,
+  borderRadius: '8px',
+  boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
+});
+
+const userAvatarStyles = mergeStyles({
+  cursor: 'pointer',
+  borderRadius: '50%',
+  padding: '6px',
+  transition: 'background 0.3s ease, transform 0.2s ease',
+  selectors: {
+    '&:hover': {
+      backgroundColor: '#f0f0f0',
+      transform: 'scale(1.1)',
+    },
+  },
+});
+
+const drawerStyles = mergeStyles({
+  width: '320px',
+  backgroundColor: '#f9f9f9',
+  padding: '20px',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  textAlign: 'center',
+  height: '100vh',
+  position: 'relative',
+});
+
+const largeAvatarStyles = mergeStyles({
+  width: '120px',
+  height: '120px',
+  borderRadius: '50%',
+  marginBottom: '16px',
+  border: '4px solid #ddd',
+});
+
+const logoutButtonStyles = mergeStyles({
+  width: '70%',
+  padding: '12px',
+  fontSize: '16px',
+  fontWeight: 'bold',
+  color: '#fff',
+  backgroundColor: '#d32f2f',
+  borderRadius: '8px',
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '10px',
+  position: 'absolute',
+  bottom: '20px',
+  transition: 'background 0.3s ease, transform 0.3s ease',
+  selectors: {
+    '&:hover': {
+      backgroundColor: '#b71c1c',
+      transform: "scale(1.005)",
+    },
+  },
+});
+
+const Header: React.FC = () => {
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+
+  return (
+    <div className={headerStyles}>
+      <Stack horizontal tokens={{ childrenGap: 24 }} styles={{ root: { flexShrink: 0 } }}>
+        <div className={navItemStyles}>
+          <Home24Regular />
+          <span>Home</span>
+        </div>
+        <div className={navItemStyles}>
+          <Info24Regular />
+          <span>About</span>
+        </div>
+        <div className={navItemStyles}>
+          <Settings24Regular />
+          <span>Settings</span>
+        </div>
+      </Stack>
+
+      <div className={searchBoxStyles}>
+        <SearchBox
+          placeholder="Search..."
+          onSearch={(newValue) => console.log('Search:', newValue)}
+          underlined
+        />
+      </div>
+
+      <div className={userAvatarStyles} onClick={() => setDrawerOpen(true)}>
+        <Persona size={PersonaSize.size48} imageUrl={img} text="Pushpender Rajput" hidePersonaDetails />
+      </div>
+
+      <Drawer open={isDrawerOpen} position="end" onOpenChange={(event, { open }) => setDrawerOpen(open)}>
+        <div className={drawerStyles}>
+          <img src={img} alt="Profile" className={largeAvatarStyles} />
+          <h2>Pushpender Rajput</h2>
+          <p>Software Engineer Intern</p>
+          <p><strong>Email:</strong> pushpenderrajputsp@gmail.com</p>
+          <p><strong>Phone:</strong> +91 8570810853</p>
+          <p><strong>Location:</strong> India</p>
+          <a className={logoutButtonStyles}>
+            <SignOut24Regular /> Logout
+          </a>
+        </div>
+      </Drawer>
+    </div>
+  );
+};
+
+export default Header;

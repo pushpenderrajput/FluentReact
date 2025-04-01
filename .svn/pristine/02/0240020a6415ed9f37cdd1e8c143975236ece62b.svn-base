@@ -1,0 +1,128 @@
+import { DrawerProps } from "@fluentui/react-components";
+import * as React from "react";
+import { Link } from "react-router-dom";
+import {
+  Hamburger,
+  NavCategory,
+  NavCategoryItem,
+  NavDivider,
+  NavDrawer,
+  NavDrawerBody,
+  NavDrawerHeader,
+  NavDrawerProps,
+  NavItem,
+  NavSectionHeader,
+  NavSubItem,
+  NavSubItemGroup,
+} from "@fluentui/react-nav-preview";
+
+import {
+  Tooltip,
+  makeStyles,
+  tokens,
+} from "@fluentui/react-components";
+
+
+const useStyles = makeStyles({
+  root: {
+    overflow: "hidden",
+    display: "flex",
+    height: "600px",
+  },
+  content: {
+    flex: "1",
+    padding: "16px",
+    display: "grid",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+  },
+  field: {
+    display: "flex",
+    marginTop: "4px",
+    marginLeft: "8px",
+    flexDirection: "column",
+    gridRowGap: tokens.spacingVerticalS,
+  },
+});
+
+
+interface NavBarProps {
+  fields: {
+    key: string;
+    label: string;
+    icon: JSX.Element;
+    path: string;
+    children?: { key: string; label: string; path: string }[];
+  }[];
+}
+type DrawerType = Required<DrawerProps>["type"];
+
+const NavBar: React.FC<NavBarProps & Partial<NavDrawerProps>> = ({ fields, ...props }) => {
+  const styles = useStyles();
+  const [isOpen, setIsOpen] = React.useState(true);
+  const [type, setType] = React.useState<DrawerType>("inline");
+  const [isMultiple, setIsMultiple] = React.useState(true);
+
+  const renderHamburgerWithToolTip = () => {
+    return (
+      <Tooltip content="Navigation" relationship="label">
+        <Hamburger onClick={() => setIsOpen(!isOpen)} />
+
+      </Tooltip>
+    );
+  };
+
+  return (
+    <div style={{ display: "flex", height: "100vh", width: "100vw", overflow: "hidden" }}>
+
+      <NavDrawer
+        defaultSelectedValue="1"
+        defaultSelectedCategoryValue=""
+        open={isOpen}
+        type={type}
+        multiple={isMultiple}
+        style={{ height: "100vh", overflow: "hidden" }}
+      >
+        <NavDrawerHeader>{renderHamburgerWithToolTip()}</NavDrawerHeader>
+
+        <NavDrawerBody style={{ height: "calc(100vh - 50px)", overflowY: "auto" }}>
+          {fields.map((field: any) =>
+            field.children ? (
+              <NavCategory value={field.key}>
+                <NavCategoryItem value={field.key} icon={field.icon}>
+                  {field.label}
+                </NavCategoryItem>
+                <NavSubItemGroup key={field.key} title={field.label}>
+                  {field.children.map((child: any) => (
+                    <NavSubItem key={child.key} value={child.key}>
+                      <Link to={child.path} style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center" }}>
+                        {child.label}
+                      </Link>
+                    </NavSubItem>
+
+                  ))}
+                </NavSubItemGroup>
+              </NavCategory>
+            ) : (
+              <NavItem key={field.key} icon={field.icon} value={field.key}>
+                <Link to={field.path} style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center" }}>
+                  {field.label}
+                </Link>
+              </NavItem>
+
+            )
+          )}
+        </NavDrawerBody>
+      </NavDrawer>
+
+
+      <div style={{ flexGrow: 1, padding: "20px", overflow: "auto" }}>
+        {!isOpen && renderHamburgerWithToolTip()}
+
+
+      </div>
+
+    </div>
+  );
+};
+export default NavBar;

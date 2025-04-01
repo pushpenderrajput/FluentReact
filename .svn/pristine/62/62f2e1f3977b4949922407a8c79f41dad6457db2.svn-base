@@ -1,0 +1,72 @@
+import React, { useState } from 'react';
+import { SearchBox, Stack, Persona, PersonaSize, mergeStyles } from '@fluentui/react';
+import { ChatHelp24Regular, Settings24Regular, SignOut24Regular } from '@fluentui/react-icons';
+import {
+  Menu,
+  MenuTrigger,
+  MenuList,
+  MenuItem,
+  MenuPopover,
+} from "@fluentui/react-components";
+import img from "../assets/img/img.png";
+import logo from "../assets/img/logo.png";
+import type { MenuProps } from "@fluentui/react-components";
+
+const headerStyles = mergeStyles({
+  width: '100%',
+  height: '64px',
+  backgroundColor: '#ffffff',
+  color: '#333',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: '0 24px',
+  boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+  boxSizing: 'border-box',
+  borderBottom: '2px solid #e0e0e0',
+});
+const menuStyles = mergeStyles({
+  backgroundColor: '#ffffff',
+  color: '#333',
+});
+
+const searchBoxStyles = mergeStyles({
+  width: '350px',
+  flexShrink: 0,
+  
+});
+
+const userAvatarStyles = mergeStyles({
+  cursor: 'pointer',
+});
+
+
+
+const Header: React.FC = (props: Partial<MenuProps>) => {
+  return (
+    <div className={headerStyles}>
+      <img src={logo} alt="Logo" style={{ height: '130px' }} />
+      
+      <div className={searchBoxStyles}>
+        <SearchBox placeholder="Search" underlined />
+      </div>
+      
+      <Menu  {...props}>
+        <MenuTrigger disableButtonEnhancement>
+          {/* <div className={userAvatarStyles}> */}
+            <Persona className={userAvatarStyles} size={PersonaSize.size32} imageUrl={img} hidePersonaDetails />
+          {/* </div> */}
+        </MenuTrigger>
+        <MenuPopover>
+      <MenuList>
+        <MenuItem icon={<Settings24Regular/>}>Settings</MenuItem>
+        <MenuItem icon={<ChatHelp24Regular/>} >Help</MenuItem>
+        <MenuItem icon={<SignOut24Regular/>}>Log Out</MenuItem>
+      </MenuList>
+    </MenuPopover>
+      </Menu>
+    </div>
+  );
+};
+
+export default Header;

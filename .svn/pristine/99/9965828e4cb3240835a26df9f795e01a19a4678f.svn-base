@@ -1,0 +1,149 @@
+import * as React from "react";
+import "../FormsElements/formstyle.css"
+import { Field, Text, Dropdown, Option, OptionOnSelectData, SelectionEvents } from "@fluentui/react-components";
+import { DatePicker } from "@fluentui/react-datepicker-compat";
+import { validateField } from "./Configue/validations";
+
+interface Field {
+  field_id: string;
+  field_label: string;
+  field_value?: string;
+  field_mandatory: string;
+  field_minvalue?: string;
+  field_placeholder?: string;
+  field_disabled?: string;
+  field_maxvalue?: string;
+  field_error_msg_required: string;
+}
+
+interface DateTimeRangePickerProps {
+  field: Field;
+  // style:React.CSSProperties;
+}
+
+const RangePicker: React.FC<DateTimeRangePickerProps> = ({ field }) => {
+  const [startDate, setStartDate] = React.useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = React.useState<Date | undefined>(undefined);
+  const [startTime, setStartTime] = React.useState<string>("00:00");
+  const [endTime, setEndTime] = React.useState<string>("00:00");
+  const [error, setError] = React.useState("");
+
+  const generateTimeOptions = () => {
+    const times = [];
+    for (let hour = 0; hour < 24; hour++) {
+      for (let minute = 0; minute < 60; minute += 30) {
+        const time = `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+        times.push(time);
+      }
+    }
+    return times;
+  };
+
+  const timeOptions = generateTimeOptions();
+
+  const handleStartDateChange = (date: Date | null | undefined) => {
+    setStartDate(date || undefined);
+    validateRange();
+  };
+
+  const handleEndDateChange = (date: Date | null | undefined) => {
+    setEndDate(date || undefined);
+    validateRange();
+  };
+
+  const handleStartTimeChange = (event: SelectionEvents, data: OptionOnSelectData) => {
+    if (data.optionValue) {
+      setStartTime(data.optionValue);
+      validateRange();
+    }
+  };
+
+  const handleEndTimeChange = (event: SelectionEvents, data: OptionOnSelectData) => {
+    if (data.optionValue) {
+      setEndTime(data.optionValue);
+      validateRange();
+    }
+  };
+
+  const validateRange = () => {
+    if (startDate && endDate) {
+      const startDateTime = new Date(startDate);
+      const endDateTime = new Date(endDate);
+
+      const [startHour, startMinute] = startTime.split(":").map(Number);
+      const [endHour, endMinute] = endTime.split(":").map(Number);
+
+      startDateTime.setHours(startHour, startMinute);
+      endDateTime.setHours(endHour, endMinute);
+
+      if (startDateTime >= endDateTime) {
+        setError("End date/time must be after start date/time.");
+      } else {
+        setError("");
+      }
+    }
+  };
+
+  const handleBlur = () => {
+    if (field.field_mandatory === "yes" && (!startDate || !endDate)) {
+      setError(field.field_error_msg_required || `${field.field_label} is required.`);
+    } else {
+      setError("");
+    }
+  };
+
+  return (
+    <Field label={field.field_label}>
+      <div className="formElem" style={{ display: "flex", gap: "16px" }}>
+        <div>
+          <Text>Start Date</Text>
+          <DatePicker
+          name={field.field_id}
+            placeholder="Select start date"
+            value={startDate}
+            onSelectDate={handleStartDateChange}
+            onBlur={handleBlur}
+          />
+          <Dropdown
+          className="FormElem"
+            placeholder="Select start time"
+            selectedOptions={[startTime]}
+            onOptionSelect={handleStartTimeChange}
+            style={{width:"80%"}}
+          >
+            {timeOptions.map((time) => (
+              <Option key={time} value={time}>
+                {time}
+              </Option>
+            ))}
+          </Dropdown>
+        </div>
+        <div>
+          <Text>End Date</Text>
+          <DatePicker
+            style={{ width: "200px" }} 
+            placeholder="Select end date"
+            value={endDate}
+            onSelectDate={handleEndDateChange}
+            onBlur={handleBlur}
+          />
+          <Dropdown
+            style={{ width: "200px" }} 
+            placeholder="Select end time"
+            selectedOptions={[endTime]}
+            onOptionSelect={handleEndTimeChange}
+          >
+            {timeOptions.map((time) => (
+              <Option key={time} value={time}>
+                {time}
+              </Option>
+            ))}
+          </Dropdown>
+        </div>
+      </div>
+      {error && <Text style={{ color: "red", fontSize: "12px" }}>{error}</Text>}
+    </Field>
+  );
+};
+
+export default RangePicker;

@@ -1,0 +1,73 @@
+import * as React from "react";
+import { Combobox, Option } from "@fluentui/react-components";
+import type { ComboboxProps } from "@fluentui/react-components";
+import { validateField } from "../utils/validations";
+
+interface OptionType {
+  option_label: string;
+  value: string;
+}
+
+interface Field {
+  field_id: string;
+  field_label: string;
+  field_value: string;
+  field_placeholder: string;
+  field_mandatory: string;
+  field_error_msg_required: string;
+  field_options: OptionType[];
+}
+
+interface SelectElementProps extends ComboboxProps {
+  field: Field;
+}
+
+const SearchableSelect: React.FC<SelectElementProps> = ({ field, ...props }) => {
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const [filteredOptions, setFilteredOptions] = React.useState(field.field_options);
+  const [selectedValue, setSelectedValue] = React.useState("");
+  const [error, setError] = React.useState("");
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const search = event.target.value.toLowerCase();
+    setSearchTerm(search);
+
+    setFilteredOptions(
+      field.field_options.filter((option) =>
+        option.option_label.toLowerCase().includes(search)
+      )
+    );
+  };
+
+  const handleBlur = (field: Field, value: string) => {
+     const errorMessage = validateField(field, value);
+     setError(errorMessage);
+   };
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <label htmlFor={field.field_id}>{field.field_label}</label>
+      <Combobox
+        required={field.field_mandatory === "yes"}
+        id={field.field_id}
+        {...props}
+        onInput={handleInputChange}
+        placeholder={field.field_placeholder}
+        onBlur={(e)=>{handleBlur(field,selectedValue)}}
+        onOptionSelect={(_, data) => {
+          setSelectedValue(data.optionValue || "");
+          setError(""); 
+        }}
+      >
+        {filteredOptions.map((option) => (
+          <Option key={option.value} value={option.value}>
+            {option.option_label}
+          </Option>
+        ))}
+      </Combobox>
+      {error && <span style={{ color: "red", fontSize: "12px" }}>{error}</span>}
+    </div>
+  );
+};
+
+export default SearchableSelect;

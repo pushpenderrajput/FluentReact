@@ -1,0 +1,117 @@
+{
+    "Parameter": {
+        "page_label": "",
+        "fields": [
+               {
+                "field_id": "carrierid",
+                "field_label": "Carrier Name",
+                "field_value": "",
+                "field_mandatory": "yes",
+                "field_placeholder": "Select",
+                "field_default_value":"",
+                "field_option_src": {
+                    "field_option_check_local_storage": "true",
+                    "field_option_src_context": "organization",
+                    "field_option_src_critieria": "all",
+                    "field_option_label": "name",
+                    "field_option_value": "organizationid",
+                    "field_select_all_label": "",
+                    "field_select_all_value": ""
+                },
+                "field_options": [
+                    {
+                        "option_label": "GTS",
+                        "value": "0"
+                    },
+                    {
+                        "option_label": "Globe Teleservices",
+                        "value": "1"
+                    },
+                    {
+                        "option_label": "FinBraine",
+                        "value": "2"
+                    },
+                    {
+                        "option_label": "CERF",
+                        "value": "3"
+                    }
+                    
+                ],
+                "field_type": "searchableSelect",
+                "field_minlength": "",
+                "field_maxlength": "",
+                "field_minvalue": "",
+                "field_maxvalue": "",
+                "field_value_type": "",
+                "field_on_blur": "",
+                "field_error_msg_required": "",
+                "field_error_msg_minlength": "",
+                "field_error_msg_maxlength": "",
+                "field_error_msg_minvalue": "",
+                "field_error_msg_maxvalue": "",
+                "field_error_msg_uq": ""
+            },
+              {
+                "field_id": "file",
+                "field_label": "Upload File",
+                "field_mandatory": "yes",
+                "field_placeholder":"",
+                "field_type":"uploadFile", 
+                "field_value":"",  
+                "field_default_value":"", 
+                "field_acceptfile":"",
+                "field_required_column":"",
+                "field_url":"",
+                "field_preview":true,
+                "field_minlength":"",
+                "field_maxlength":"",
+                "field_minvalue":"",
+                "field_maxvalue":"",
+                "field_value_type":"",
+                "field_on_blur":"",
+                "field_error_msg_required":"",
+                "field_error_msg_minlength":"",
+                "field_error_msg_maxlength":"",
+                "field_error_msg_minvalue":"",
+                "field_error_msg_maxvalue":"",
+                "field_error_msg_uq":""
+               },
+             {
+                "field_id": "date",
+                "field_label": "Date",
+                "field_placeholder":"Select Date",
+                "field_value": "",
+                "field_default_value": "",
+                "field_mandatory": "",
+                "field_type": "date",
+                "field_minlength": "",
+                "field_maxlength": "",
+                "field_minvalue": "",
+                "field_maxvalue": "",
+                "field_value_type": "today",
+                "field_past_Disable": "",
+                "field_on_blur": "",
+                "field_disabled": "",
+                "field_error_msg_required": "Please select Date",
+                "field_error_msg_minlength": "",
+                "field_error_msg_maxlength": "",
+                "field_error_msg_minvalue": "",
+                "field_error_msg_maxvalue": "",
+                "field_error_msg_uq": ""
+             }
+        ]
+    },
+    "xioFEConfig": {
+        "TabStyle": "",
+        "actionName": "",
+        "createLink": "",
+        "viewLink": "",
+        "createButtonText": "",
+        "viewButtonText": "",
+        "paragraphText": "",
+        "sideImageData": {
+            "img_heading": "",
+            "img_paragraph": ""
+        }
+    }
+}

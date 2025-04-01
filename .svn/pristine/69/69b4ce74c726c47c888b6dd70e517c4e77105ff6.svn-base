@@ -1,0 +1,42 @@
+import * as React from "react";
+import { Checkbox, CheckboxProps } from "@fluentui/react-components";
+
+// Define the types for FieldOption and FieldType
+interface FieldOption {
+  value: string;
+  option_label: string;
+}
+
+interface FieldType {
+  field_label: string;
+  field_type: string;
+  field_options: FieldOption[];
+}
+
+// Define the props for the component
+interface CheckboxElementProps {
+  fields: FieldType[];
+}
+
+const CheckboxElement: React.FC<CheckboxElementProps> = ({ fields }) => {
+  // Find the checkbox field in the fields array
+  const field = fields.find(f => f.field_type === "checkbox");
+
+  if (!field) {
+    return null; // In case no checkbox field is found
+  }
+
+  return (
+    <div>
+      {field.field_options.map((option) => (
+        <Checkbox
+          key={option.value}
+          value={option.value}
+          label={option.option_label}
+        />
+      ))}
+    </div>
+  );
+};
+
+export default CheckboxElement;

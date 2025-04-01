@@ -1,0 +1,56 @@
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { FluentProvider, webLightTheme } from "@fluentui/react-components";
+import { Home24Regular, Video24Regular, ArrowUpload24Regular, TableFreezeRow24Regular, PersonCircle32Regular } from "@fluentui/react-icons";
+import Header from "./Components/Header";
+import NavBar from "./Components/NavBar";
+import Home from "./Components/Pages/Home";
+import Product from "./Components/Pages/Product";
+import Data from "./Components/Pages/Data";
+import FormPage from "./Components/Pages/FormPage";
+import User from "./Components/Pages/User";
+import Role from "./Components/Pages/Role";
+import NotFound from "./Components/Pages/NotFound";
+import "./App.css"; 
+
+const menuItems = [
+  { key: "1", label: "Dashboard", icon: <Home24Regular />, path: "/home-page/dashboard" },
+  { key: "2", label: "Product", icon: <Video24Regular />, path: "/home-page/product" },
+  { key: "3", label: "Data", icon: <TableFreezeRow24Regular />, path: "/home-page/data" },
+  { key: "4", label: "Form", icon: <ArrowUpload24Regular />, path: "/home-page/form" },
+  {
+    key: "5",
+    label: "User Management",
+    icon: <PersonCircle32Regular />,
+    path: "/home-page/user-management",
+    children: [
+      { key: "5-1", label: "User", path: "/home-page/user-management/user" },
+      { key: "5-2", label: "Role", path: "/home-page/settings/role" },
+    ],
+  },
+];
+
+export const App: React.FC = () => {
+  return (
+    <Router>
+      <Header/>
+      <FluentProvider theme={webLightTheme}>
+        <div className="app-container">
+          
+          <NavBar fields={menuItems} /> 
+          <div className="content">
+            <Routes>
+              <Route path="/home-page/dashboard" element={<Home />} />
+              <Route path="/home-page/product" element={<Product />} />
+              <Route path="/home-page/data" element={<Data />} />
+              <Route path="/home-page/form" element={<FormPage />} />
+              <Route path="/home-page/user-management/user" element={<User />} />
+              <Route path="/home-page/settings/role" element={<Role />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
+        </div>
+      </FluentProvider>
+    </Router>
+  );
+};

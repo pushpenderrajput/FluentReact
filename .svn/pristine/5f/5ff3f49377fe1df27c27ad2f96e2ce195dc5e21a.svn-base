@@ -1,0 +1,43 @@
+import React from "react";
+import { Button, SearchBox, Title1, Toolbar, Menu, MenuTrigger, MenuPopover, MenuList, MenuItem, Avatar } from "@fluentui/react-components";
+import { Navigation20Filled, Settings20Filled, Person20Filled, SignOut20Filled } from "@fluentui/react-icons";
+import logo from "../assets/img/logo.png"
+const Header = () => {
+
+  return (
+    <Toolbar
+      style={{
+        padding: 10,
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        height:"46px",
+        backgroundColor:"#f3f3f3"
+      }}
+    >
+      <div><img src={logo} style={{height:"100px"}}></img></div>
+      
+      <div style={{paddingRight:"90px"}}><SearchBox appearance="filled-lighter-shadow" placeholder="Search"></SearchBox></div>
+      <div>
+      
+
+      <Menu>
+        <MenuTrigger disableButtonEnhancement>
+          <Button appearance="subtle">
+            <Avatar name="Pushpender Rajput" size={32} />
+          </Button>
+        </MenuTrigger>
+        <MenuPopover>
+          <MenuList>
+            <MenuItem icon={<Person20Filled />}>Profile</MenuItem>
+            <MenuItem icon={<Settings20Filled />}>Settings</MenuItem>
+            <MenuItem icon={<SignOut20Filled />}>Logout</MenuItem>
+          </MenuList>
+        </MenuPopover>
+      </Menu>
+      </div>
+    </Toolbar>
+  );
+};
+
+export default Header;

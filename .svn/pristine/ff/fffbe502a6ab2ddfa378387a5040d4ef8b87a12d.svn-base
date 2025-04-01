@@ -1,0 +1,153 @@
+import { DrawerProps } from "@fluentui/react-components";
+import * as React from "react";
+import "../../src/App.css"
+import { Link } from "react-router-dom";
+import { Drawer } from "@fluentui/react-components";
+import {
+  Hamburger,
+  NavCategory,
+  NavCategoryItem,
+  NavDivider,
+  NavDrawer,
+  NavDrawerBody,
+  NavDrawerHeader,
+  NavDrawerProps,
+  NavItem,
+  NavSectionHeader,
+  NavSubItem,
+  NavSubItemGroup,
+} from "@fluentui/react-nav-preview";
+
+import {
+  Tooltip,
+  makeStyles,
+  tokens,
+} from "@fluentui/react-components";
+
+
+const useStyles = makeStyles({
+  root: {
+    overflow: "hidden",
+    display: "flex",
+    height: "600px",
+  },
+  content: {
+    flex: "1",
+    padding: "16px",
+    display: "grid",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+  },
+  field: {
+    display: "flex",
+    marginTop: "4px",
+    marginLeft: "8px",
+    flexDirection: "column",
+    gridRowGap: tokens.spacingVerticalS,
+  },
+});
+
+
+interface NavBarProps {
+  fields: {
+    key: string;
+    label: string;
+    icon: JSX.Element;
+    path: string;
+    children?: { key: string; label: string; path: string }[];
+  }[];
+}
+type DrawerType = Required<DrawerProps>["type"];
+
+const NavBar: React.FC<NavBarProps & Partial<NavDrawerProps>> = ({ fields, ...props }) => {
+  // const styles = useStyles();
+  const [isOpen, setIsOpen] = React.useState(true);
+  const [type, setType] = React.useState<DrawerType>("inline");
+  React.useEffect(() => {
+    // Function to update the type based on screen width
+    const updateType = () => {
+      if (window.innerWidth < 910) {
+        setType("overlay"); // Change to "overlay" if screen width is less than 768px
+      } else {
+        setType("inline"); // Otherwise, keep it as "inline"
+      }
+    };
+
+    // Set the initial type
+    updateType();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', updateType);
+
+    // Cleanup the event listener on component unmount
+    return () => window.removeEventListener('resize', updateType);
+  }, []);
+  const renderHamburgerWithToolTip = () => {
+    return (
+      <Tooltip content="Navigation" relationship="label">
+        <Hamburger onClick={() => setIsOpen(!isOpen)} />
+
+      </Tooltip>
+    );
+  };
+
+  return (
+    <div style={{ display: "flex", height: "100vh" }}>
+
+
+      <Drawer
+        // defaultSelectedValue=""
+        // defaultSelectedCategoryValue=""
+        
+        separator
+        open={isOpen}
+        type={type}
+        // multiple={isMultiple}
+        onOpenChange={(_, { open }) => setIsOpen(open)}
+        style={{ height: "100vh", overflow: "hidden" }}
+      >
+        <NavDrawerHeader>{renderHamburgerWithToolTip()}</NavDrawerHeader>
+
+        <NavDrawerBody style={{ height: "calc(100vh - 50px)", overflowY: "auto" }}>
+          {fields.map((field: any) =>
+            field.children ? (
+              <NavCategory value={field.key}>
+                <NavCategoryItem value={field.key} icon={field.icon}>
+                  {field.label}
+                </NavCategoryItem>
+                <NavSubItemGroup key={field.key} title={field.label}>
+                  {field.children.map((child: any) => (
+                    <NavSubItem key={child.key} value={child.key}>
+                      <Link to={child.path} style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center" }}>
+                        {child.label}
+                      </Link>
+                    </NavSubItem>
+
+                  ))}
+                </NavSubItemGroup>
+              </NavCategory>
+            ) : (
+              
+                <Link to={field.path} style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center" }}>
+              <NavItem key={field.key} icon={field.icon} value={field.key} >{field.label}</NavItem> 
+                </Link>
+               
+              
+
+            )
+          )}
+        </NavDrawerBody>
+      </Drawer>
+      {/* </Drawer> */}
+
+
+      <div style={{ flexGrow:1 , overflow: "auto" }}>
+        {!isOpen && renderHamburgerWithToolTip()}
+
+
+      </div>
+
+    </div>
+  );
+};
+export default NavBar;

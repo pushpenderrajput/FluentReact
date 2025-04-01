@@ -1,0 +1,95 @@
+import * as React from 'react';
+import { DetailsList, SelectionMode, IColumn } from '@fluentui/react';
+import tableConfig from './tableConfig.json';
+
+interface ColumnConfig {
+  key: string;
+  title: string;
+  dataIndex: string;
+  valueFormat: string;
+  decimalPoints?: number;
+  currencySymbol?: string;
+}
+
+interface TableConfig {
+  columns: ColumnConfig[];
+  config: {
+    tableAction: boolean;
+    tableCheckBox: boolean;
+    id: string;
+  };
+}
+
+interface DataRow {
+  [key: string]: string | number | Date;
+}
+
+const formatData = (data: DataRow[], columns: ColumnConfig[]): DataRow[] => {
+  return data.map((row) => {
+    const formattedRow: DataRow = {};
+    columns.forEach((column) => {
+      const { dataIndex, valueFormat, decimalPoints, currencySymbol } = column;
+      let value = row[dataIndex];
+
+      switch (valueFormat) {
+        case 'currency':
+          if (typeof value === 'number') {
+            value = `${currencySymbol}${value.toFixed(decimalPoints)}`;
+          } else {
+            value = `${currencySymbol}0.00`;
+          }
+          break;
+        case 'date':
+          if (value) {
+            value = new Date(value as string).toLocaleDateString();
+          } else {
+            value = 'N/A';
+          }
+          break;
+        case 'number':
+          if (typeof value === 'number') {
+            value = decimalPoints ? value.toFixed(decimalPoints) : value;
+          } else {
+            value = decimalPoints ? '0.00' : '0';
+          }
+          break;
+        default:
+          value = value || 'N/A';
+      }
+
+      formattedRow[dataIndex] = value;
+    });
+    return formattedRow;
+  });
+};
+
+const generateColumns = (columns: ColumnConfig[]): IColumn[] => {
+  return columns.map((column) => ({
+    key: column.key,
+    name: column.title,
+    fieldName: column.dataIndex,
+    minWidth: 100,
+    isResizable: true,
+  }));
+};
+
+interface DynamicTableProps {
+  data: DataRow[];
+}
+
+const DynamicTable: React.FC<DynamicTableProps> = ({ data }) => {
+  const { columns } = tableConfig as TableConfig;
+  const formattedData = formatData(data, columns);
+  const tableColumns = generateColumns(columns);
+
+  return (
+    <DetailsList
+      items={formattedData}
+      columns={tableColumns}
+      selectionMode={SelectionMode.none}
+      isHeaderVisible={true}
+    />
+  );
+};
+
+export default DynamicTable;

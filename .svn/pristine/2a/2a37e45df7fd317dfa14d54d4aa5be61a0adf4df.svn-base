@@ -1,0 +1,413 @@
+import React, { useState } from "react";
+import SelectElement from "../FormsElements/SelectElement";
+import SearchableSelect from "../FormsElements/SearchableSelect";
+import MultiSelect from "../FormsElements/MultiSelect";
+import InputElement from "../FormsElements/InputElement";
+
+const fields = [
+  {
+    "field_id": "carrierid",
+    "field_label": "Carrier Name",
+    "field_value": "",
+    "field_mandatory": "yes",
+    "field_default_value":"",
+    "field_placeholder": "Select",
+    "field_option_src": {
+        "field_option_check_local_storage": "true",
+        "field_option_src_context": "organization",
+        "field_option_src_critieria": "all",
+        "field_option_label": "name",
+        "field_option_value": "organizationid",
+        "field_select_all_label": "",
+        "field_select_all_value": ""
+    },
+    "field_options": [
+        {
+            "option_label": "Loading...",
+            "value": "0"
+        }
+    ],
+    "field_type": "searchableSelect",
+    "field_minlength": "",
+    "field_maxlength": "",
+    "field_minvalue": "",
+    "field_maxvalue": "",
+    "field_value_type": "",
+    "field_on_blur": "",
+    "field_error_msg_required": "",
+    "field_error_msg_minlength": "",
+    "field_error_msg_maxlength": "",
+    "field_error_msg_minvalue": "",
+    "field_error_msg_maxvalue": "",
+    "field_error_msg_uq": ""
+},
+{
+  "field_id": "carrierid",
+  "field_label": "Carrier Type",
+  "field_value": "",
+  "field_mandatory": "yes",
+  "field_default_value":"",
+  "field_placeholder": "Select",
+  "field_option_src": {
+      "field_option_check_local_storage": "true",
+      "field_option_src_context": "organization",
+      "field_option_src_critieria": "all",
+      "field_option_label": "name",
+      "field_option_value": "organizationid",
+      "field_select_all_label": "",
+      "field_select_all_value": ""
+  },
+  "field_options": [
+      {
+          "option_label": "Loading...",
+          "value": "0"
+      }
+  ],
+  "field_type": "searchableSelect",
+  "field_minlength": "",
+  "field_maxlength": "",
+  "field_minvalue": "",
+  "field_maxvalue": "",
+  "field_value_type": "",
+  "field_on_blur": "",
+  "field_error_msg_required": "",
+  "field_error_msg_minlength": "",
+  "field_error_msg_maxlength": "",
+  "field_error_msg_minvalue": "",
+  "field_error_msg_maxvalue": "",
+  "field_error_msg_uq": ""
+},
+{
+  "field_id": "carrierid",
+  "field_label": "Retailer",
+  "field_value": "",
+  "field_mandatory": "yes",
+  "field_default_value":"",
+  "field_placeholder": "Select",
+  "field_option_src": {
+      "field_option_check_local_storage": "true",
+      "field_option_src_context": "organization",
+      "field_option_src_critieria": "all",
+      "field_option_label": "name",
+      "field_option_value": "organizationid",
+      "field_select_all_label": "",
+      "field_select_all_value": ""
+  },
+  "field_options": [
+      {
+          "option_label": "Loading...",
+          "value": "0"
+      }
+  ],
+  "field_type": "searchableSelect",
+  "field_minlength": "",
+  "field_maxlength": "",
+  "field_minvalue": "",
+  "field_maxvalue": "",
+  "field_value_type": "",
+  "field_on_blur": "",
+  "field_error_msg_required": "",
+  "field_error_msg_minlength": "",
+  "field_error_msg_maxlength": "",
+  "field_error_msg_minvalue": "",
+  "field_error_msg_maxvalue": "",
+  "field_error_msg_uq": ""
+},
+{
+  "field_id": "gtscompanyid",
+  "field_label": "GTS Company",
+  "field_value": "",
+  "field_mandatory": "yes",
+  "field_default_value":"",
+  "field_placeholder": "Select",
+  "field_option_src": {
+      "field_option_check_local_storage": "true",
+      "field_option_src_context": "gtsCompanydetails",
+      "field_option_src_critieria": "all",
+      "field_option_label": [{"column":"companyshortname"},{"string":"-"},{"column":"city"}],
+      "field_option_value": "gtscompanyid",
+      "field_select_all_label": "",
+      "field_select_all_value": "",
+      "field_option_attributes":["suffix"]
+  },
+  "field_options": [
+      {
+          "option_label": "Loading...",
+          "value": "0"
+      }
+  ],
+  "field_type": "select",
+  "field_minlength": "",
+  "field_maxlength": "",
+  "field_minvalue": "",
+  "field_maxvalue": "",
+  "field_value_type": "",
+  "field_on_blur": "",
+  "field_error_msg_required": "",
+  "field_error_msg_minlength": "",
+  "field_error_msg_maxlength": "",
+  "field_error_msg_minvalue": "",
+  "field_error_msg_maxvalue": "",
+  "field_error_msg_uq": ""
+},
+{
+  "field_id": "registeredname",
+  "field_label": "Registered Name",
+  "field_mandatory": "yes",
+  "field_placeholder": "Registered Name",
+  "field_type": "text",
+  "field_value": "",
+  "field_attribute_value": "",
+  "field_disabled_Edit": "no",
+  "field_default_value": "",
+  "field_disabled": "",
+  "field_minlength": "",
+  "field_maxlength": "",
+  "field_minvalue": "",
+  "field_maxvalue": "",
+  "field_value_type": "SpecialCharacter",
+  "field_on_blur": "",
+  "field_error_msg_required": "",
+  "field_error_msg_minlength": "",
+  "field_error_msg_maxlength": "",
+  "field_error_msg_minvalue": "",
+  "field_error_msg_maxvalue": "",
+  "field_error_msg_uq": "",
+  "field_unique": "no",
+  "field_apipath": ""
+},
+{
+  "field_id": "registeredname",
+  "field_label": "Follower Name",
+  "field_mandatory": "yes",
+  "field_placeholder": "Registered Name",
+  "field_type": "text",
+  "field_value": "",
+  "field_attribute_value": "",
+  "field_disabled_Edit": "no",
+  "field_default_value": "",
+  "field_disabled": "",
+  "field_minlength": "",
+  "field_maxlength": "",
+  "field_minvalue": "",
+  "field_maxvalue": "",
+  "field_value_type": "SpecialCharacter",
+  "field_on_blur": "",
+  "field_error_msg_required": "",
+  "field_error_msg_minlength": "",
+  "field_error_msg_maxlength": "",
+  "field_error_msg_minvalue": "",
+  "field_error_msg_maxvalue": "",
+  "field_error_msg_uq": "",
+  "field_unique": "no",
+  "field_apipath": ""
+},
+{
+  "field_id": "",
+  "field_label": "Mobile number",
+  "field_mandatory": "",
+  "field_placeholder": "",
+  "field_type": "number",
+  "field_value": "number",
+  "field_disabled_Edit": "no",
+  "field_default_value": "",
+  "field_disabled": "",
+  "field_minlength": "",
+  "field_maxlength": "",
+  "field_minvalue": "",
+  "field_maxvalue": "",
+  "field_value_type": "Mobile",
+  "field_on_blur": "",
+  "field_error_msg_required": "",
+  "field_error_msg_minlength": "",
+  "field_error_msg_maxlength": "",
+  "field_error_msg_minvalue": "",
+  "field_error_msg_maxvalue": "",
+  "field_error_msg_uq": "",
+  "field_unique": "no",
+  "field_apipath": ""
+},
+{
+  "field_id": "gtscompanyid",
+  "field_label": "GTS Company",
+  "field_value": "",
+  "field_mandatory": "yes",
+  "field_placeholder": "Select",
+  "field_option_src": {
+      "field_option_check_local_storage": "true",
+      "field_option_src_context": "gtsCompanydetails",
+      "field_option_src_critieria": "all",
+      "field_option_label": [{"column":"companyshortname"},{"string":"-"},{"column":"city"}],
+      "field_option_value": "gtscompanyid",
+      "field_select_all_label": "",
+      "field_select_all_value": "",
+      "field_option_attributes":["suffix"]
+  },
+  "field_options": [
+      {
+          "option_label": "Loading...",
+          "value": "0"
+      }
+  ],
+  "field_type": "multiSelect",
+  "field_minlength": "",
+  "field_maxlength": "",
+  "field_minvalue": "",
+  "field_maxvalue": "",
+  "field_value_type": "",
+  "field_on_blur": "",
+  "field_error_msg_required": "",
+  "field_error_msg_minlength": "",
+  "field_error_msg_maxlength": "",
+  "field_error_msg_minvalue": "",
+  "field_error_msg_maxvalue": "",
+  "field_error_msg_uq": ""
+},
+{
+  "field_id": "gtscompanyid",
+  "field_label": "Company",
+  "field_value": "",
+  "field_mandatory": "yes",
+  "field_placeholder": "Select",
+  "field_option_src": {
+      "field_option_check_local_storage": "true",
+      "field_option_src_context": "gtsCompanydetails",
+      "field_option_src_critieria": "all",
+      "field_option_label": [{"column":"companyshortname"},{"string":"-"},{"column":"city"}],
+      "field_option_value": "gtscompanyid",
+      "field_select_all_label": "",
+      "field_select_all_value": "",
+      "field_option_attributes":["suffix"]
+  },
+  "field_options": [
+      {
+          "option_label": "Loading...",
+          "value": "0"
+      }
+  ],
+  "field_type": "multiSelect",
+  "field_minlength": "",
+  "field_maxlength": "",
+  "field_minvalue": "",
+  "field_maxvalue": "",
+  "field_value_type": "",
+  "field_on_blur": "",
+  "field_error_msg_required": "",
+  "field_error_msg_minlength": "",
+  "field_error_msg_maxlength": "",
+  "field_error_msg_minvalue": "",
+  "field_error_msg_maxvalue": "",
+  "field_error_msg_uq": ""
+},
+{
+  "field_id": "registeredname",
+  "field_label": "Registered Name",
+  "field_mandatory": "yes",
+  "field_placeholder": "Registered Name",
+  "field_type": "text",
+  "field_value": "",
+  "field_attribute_value": "",
+  "field_disabled_Edit": "no",
+  "field_default_value": "",
+  "field_disabled": "",
+  "field_minlength": "",
+  "field_maxlength": "",
+  "field_minvalue": "",
+  "field_maxvalue": "",
+  "field_value_type": "SpecialCharacter",
+  "field_on_blur": "",
+  "field_error_msg_required": "",
+  "field_error_msg_minlength": "",
+  "field_error_msg_maxlength": "",
+  "field_error_msg_minvalue": "",
+  "field_error_msg_maxvalue": "",
+  "field_error_msg_uq": "",
+  "field_unique": "no",
+  "field_apipath": ""
+},
+ 
+];
+
+const FormPage = () => {
+  const [formValues, setFormValues] = useState<{ [key: string]: any }>({});
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  // Handle input change
+  const handleInputChange = (fieldId: string, value: string) => {
+    setFormValues({ ...formValues, [fieldId]: value });
+    // Clear error when user starts typing
+    if (errors[fieldId]) {
+      setErrors({ ...errors, [fieldId]: "" });
+    }
+  };
+
+  // Handle form submission
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+
+   
+
+  
+
+    // Submit form data
+    console.log("Form Values:", formValues);
+    alert("Form submitted successfully!");
+  };
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      style={{
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: "20px",
+        maxWidth: "800px",
+        margin: "0 auto",
+        padding: "20px",
+        border: "1px solid #ccc",
+        borderRadius: "8px",
+        backgroundColor: "#f9f9f9",
+      }}
+    >
+      {fields.map((field) => {
+       
+
+        
+
+        switch (field.field_type) {
+          case "select":
+            // return <SelectElement key={field.field_id} field={{ ...field, field_options: field.field_options || [] }} />;
+          case "searchableSelect":
+            return <SearchableSelect key={field.field_id} field={{ ...field, field_options: field.field_options || [] }} />;
+          case "multiSelect":
+            return <MultiSelect key={field.field_id} field={{ ...field, field_options: field.field_options || [] }}  />;
+          case "text":
+          case "email":
+          case "number":
+            return <InputElement  key={field.field_id} fields={[{ ...field}]} />;
+          default:
+            return null;
+        }
+      })}
+
+      <div style={{ gridColumn: "1 / -1", textAlign: "center" }}>
+        <button
+          type="submit"
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#007bff",
+            color: "#fff",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  );
+};
+
+export default FormPage;

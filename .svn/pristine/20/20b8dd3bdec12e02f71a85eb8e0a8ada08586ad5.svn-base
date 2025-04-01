@@ -1,0 +1,113 @@
+import React, { useState } from "react";
+import data from "../utils/formJson.json"
+import SelectElement from "../FormsElements/SelectElement";
+import SearchableSelect from "../FormsElements/SearchableSelect";
+import MultiSelect from "../FormsElements/MultiSelect";
+import InputElement from "../FormsElements/InputElement";
+import DateInput from "../FormsElements/DateInput";
+import CheckboxElement from "../FormsElements/CheckBoxElement";
+import RadioElement from "../FormsElements/RadioElements";
+import TimePicker from "../FormsElements/TimePicker";
+import DateTimeRangePicker from "../FormsElements/RangePicker";
+import TextareaElement from "../FormsElements/MultilineText";
+
+const fields  = data.Parameter.fields;
+const FormPage = () => {
+  const [formValues, setFormValues] = useState<{ [key: string]: any }>({});
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+ 
+
+ 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+  
+    const newErrors: { [key: string]: string } = {};
+    fields.forEach((field) => {
+      if (field.field_mandatory === "yes" && !formValues[field.field_id]) {
+        newErrors[field.field_id] = field.field_error_msg_required;
+      }
+    });
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+
+    console.log("Form Values:", formValues);
+    alert("Form submitted successfully!");
+  };
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      style={{
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: "20px",
+        maxWidth: "800px",
+        margin: "0 auto",
+        padding: "20px",
+        border: "1px solid #ccc",
+        borderRadius: "8px",
+        backgroundColor: "#f9f9f9",
+      }}
+    >
+      {fields.map((field) => {
+        const fieldProps = {
+          ...field,
+          field_value: formValues[field.field_id] || "",
+          field_options: field.field_options || [], 
+        };
+
+        
+        switch (field.field_type) {
+          case "select":
+            return <SelectElement key={field.field_id} field={{ ...field, field_options: field.field_options || [] }}/>;
+          case "searchableSelect":
+            return <SearchableSelect key={field.field_id} field={{ ...field, field_options: field.field_options || [] }} />;
+          case "multiSelect":
+            return <MultiSelect key={field.field_id} field={{ ...field, field_options: field.field_options || [] }} />;
+          case "text":
+          case "email":
+          case "number":
+            return <InputElement key={field.field_id} fields={[{ ...field }]}/>;
+          case "multilineText":
+            return <TextareaElement key={field.field_id} field = {{...field}}/>
+          case "date":
+            return <DateInput key={field.field_id} field={{...field}}/>;
+          case "checkbox":
+            return <CheckboxElement key={field.field_id} field = {{ ...field, field_options: field.field_options || [] }}/>;
+          case "radio":
+            return <RadioElement key={field.field_id} field = {{ ...field, field_options: field.field_options || [] }}/>;
+          case "time":
+            return <TimePicker key={field.field_id} field = {{...field}}/>;
+          case "startDateToEndDate":
+            return <DateTimeRangePicker key={field.field_id} field = {{...field}}/>
+          default:
+            return null;
+        }
+      })}
+
+      <div style={{ gridColumn: "1 / -1", textAlign: "center" }}>
+        <button
+          type="submit"
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#007bff",
+            color: "#fff",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  );
+};
+
+export default FormPage;
