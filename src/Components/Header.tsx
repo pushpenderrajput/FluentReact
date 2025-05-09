@@ -33,7 +33,7 @@ const Header:React.FC<HeaderProps>  = ({ isNavOpen, setIsNavOpen }) => {
         <Menu>
           <MenuTrigger disableButtonEnhancement>
             <Button appearance="subtle">
-              <Avatar name="Pushpender Rajput" size={32} />
+              <Avatar name="Kartik Rajput" size={32} />
             </Button>
           </MenuTrigger>
           <MenuPopover>
